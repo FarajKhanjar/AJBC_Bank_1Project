@@ -48,11 +48,11 @@ public class AppManager
 	 */
 	private void OpenAccount() 
 	{
-		System.out.println("Enter a monthly Income:");
+		System.out.println("Enter a Monthly-Income: \n");
 		 int monthlyIncome = scan.nextInt(); 
-		 System.out.println("Enter your first Name:\r\n"
-		 		+ "Enter your Last Name:\r\n"
-		 		+ "Enter your Phone Number in format of:{areaCode + number}\r\n"
+		 System.out.println("Enter your first Name:v\n"
+		 		+ "Enter your Last Name:v\n"
+		 		+ "Enter your Phone Number in format of:{areaCode + number} \n"
 		 		+ "Enter your BitrthDate:LocalDate");
 		 this.person.setFirstName(scan.nextLine());
 		 this.person.setLastName(scan.nextLine());
@@ -60,7 +60,7 @@ public class AppManager
 		 this.phoneNumber.setPhoneNumber(scan.nextInt());
 		 this.person.setPhoneNumber(this.phoneNumber);
 		 this.person.setBitrthDate(createDate());
-		 bankManager.setUsersToApprove(this.person);
+		// bankManager.setUsersToApprove(this.person);
 		
 	}
 	private void logout() 

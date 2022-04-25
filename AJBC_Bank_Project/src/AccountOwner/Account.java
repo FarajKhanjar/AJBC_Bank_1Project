@@ -104,5 +104,17 @@ public class Account
 			return false;
 		}
 	}
+	
+	
+	public boolean checkLoanAmount(int cashAmount) 
+	{
+		return cashAmount <= accountProperties.maxLoan;
+	}
+	
+	public void getLoanAmount(int cashAmount, int paymentsNumber) 
+	{
+		setBalance(balance + cashAmount);
+		activityOfData(ActivityName.GET_LOAN, "num of the payments is: " + paymentsNumber, cashAmount);
+	}
 
 }

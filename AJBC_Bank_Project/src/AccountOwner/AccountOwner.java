@@ -17,6 +17,8 @@ public class AccountOwner extends Person
 	private double monthlyIncome;
 	private Credentials credentials;
 	private BankManager bankManager;
+	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
+	
 	static  Scanner sc = new Scanner(System.in);
 	
 	//constructor
@@ -166,6 +168,9 @@ public class AccountOwner extends Person
 	}
 	
 	
+	/**
+	 * User makes a payment to a payee.
+	 */
 	public void payBill() 
 	{
 		System.out.println("Choose which bill you want to pay: ");
@@ -183,6 +188,37 @@ public class AccountOwner extends Person
 			System.out.printf("Successful to pay the bill of: "+cashAmount);
 		}
 	}
+	
+	
+	/**
+	 * User makes a fast transfer to another user by providing a phone number and an amount.
+	 */
+	public void loanRequest() 
+	{
+		System.out.print("What is the amount of loan do you request?");
+		int amountOfLoan = sc.nextInt();
+		
+		if(account.checkLoanAmount(amountOfLoan))
+		{
+			System.out.print("What is your monthly payments? ");
+			int monthlyPaymentsNumber = sc.nextInt();
+			if(MAXIMUM_Payments_Number >= monthlyPaymentsNumber) 
+			{
+				account.getLoanAmount(amountOfLoan, monthlyPaymentsNumber);
+				System.out.printf("Yeah! you are able to receive loan amount: "+amountOfLoan);
+			}
+			else 
+			{
+				System.out.println("Sorry... your payments number larger then the maximum.");
+			}
+		}
+		else 
+		{
+			System.out.println("Sorry... this amount is bigger then maximum loan.");
+		}
+	}
+	
+	
 	
 	private void produceReport(LocalDate start)
 	{

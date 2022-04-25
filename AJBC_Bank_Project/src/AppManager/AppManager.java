@@ -58,31 +58,47 @@ public class AppManager
 	{
 		System.out.println("You are welcome to our AJBC Bank, please fill this application form:\n");
 		
-		 System.out.println("Enter your first Name:v\n"
+		System.out.println("Enter your first Name:v\n"
 		 		+ "Enter your Last Name:v\n"
 		 		+ "Enter your Phone Number in format of:{areaCode + number} \n"
 		 		+ "Enter your BitrthDate:LocalDate");
-		 System.out.println("Enter a Monthly-Income: \n");
-		 int monthlyIncome = scan.nextInt(); 
-		 this.person.setFirstName(scan.nextLine());
-		 this.person.setLastName(scan.nextLine());
-		 this.phoneNumber.setAreaCode(scan.nextInt());
-		 this.phoneNumber.setPhoneNumber(scan.nextInt());
-		 this.person.setPhoneNumber(this.phoneNumber);
-		 this.person.setBitrthDate(createDate());
+		System.out.println("Enter a Monthly-Income: \n");
+		int monthlyIncome = scan.nextInt(); 
+		this.person.setFirstName(scan.nextLine());
+		this.person.setLastName(scan.nextLine());
+		this.phoneNumber.setAreaCode(scan.nextInt());
+		this.phoneNumber.setPhoneNumber(scan.nextInt());
+		this.person.setPhoneNumber(this.phoneNumber);
+		this.person.setBitrthDate(createDate());
 		 
-		 Scanner s = new Scanner(System.in);
-
-		 System.out.print("Enter a userName: ");
-		 String userName = s.next();
-
-		 System.out.print("Enter password: ");
-		 String password = s.next();
-		 login(userName, password);
-
-		    
-		// bankManager.setUsersToApprove(this.person);
+		Scanner sc = new Scanner(System.in);
+	    System.out.println("Enter the Username");
+	    String userName = sc.nextLine();
+	     
+	    System.out.println("Enter the Password");
+	    String password = sc.nextLine();
+	    boolean checkUserNameLD = cheackLettersAndDigits(userName);  
+	    if(checkUserNameLD==false)
+	    {
+	         System.out.println("Invalid Username");
+	    }
+	    boolean checkPasswordLD = cheackLettersAndDigits(password);
+	    if(checkUserNameLD==false || password.length()>8 || password.length()<4)
+	    {
+	    	    System.out.println("Invalid Password");
+	    }
+	     
+		bankManager.setUsersToApprove(this.person);
 		
+	}
+	
+	private boolean cheackLettersAndDigits(String userName)
+	{
+		if(userName.matches("[a-zA-Z0-9]*")) {
+			return true;
+		}
+		else
+			return false;
 	}
 	private void logout() 
 	{

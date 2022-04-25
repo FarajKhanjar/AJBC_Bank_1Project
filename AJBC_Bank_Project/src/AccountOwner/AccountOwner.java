@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.Random;
 import java.util.Scanner;
 
+import AppManager.AppManager;
+
 public class AccountOwner extends Person
 {
 	//fields
@@ -137,13 +139,32 @@ public class AccountOwner extends Person
 		}		
 	}
 		
-	private void produceReport(LocalDate start)
-	{
-		
-	}
+	
 
 	
 	private void transferFunds()
+	{
+		System.out.print("For transfer amount of many, Enter receiving user phone number: ");
+		String receiveNumber = sc.next();
+		PhoneNumber phoneNumber = PhoneNumber.getFullPhoneNumber(receiveNumber);
+		AccountOwner receiverAccount = AppManager.getOwnerByPhoneNum(phoneNumber);
+
+		if (receiverAccount == null) 
+		{
+			System.out.println("Sorry, we didnt found this Account in our system");
+		} 
+		else {
+			System.out.print("For transfer amount of many,Enter amount of cash: ");
+			int cashAmount = sc.nextInt();
+			if (account.transferToAnotherAccount(cashAmount)) 
+			{
+				receiverAccount.account.accountTransferredForMe(cashAmount);
+				System.out.printf("Successful transfer of: "+cashAmount);
+			}
+		}
+	}
+	
+	private void produceReport(LocalDate start)
 	{
 		
 	}

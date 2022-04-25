@@ -11,6 +11,7 @@ public class Account
 	private Double intrestRate; //TODO add it to class diagram.
 	private Double operationFee; //TODO add it to class diagram.
 	private int index=0;
+	private final int MAXIMUM_TRANSFER_CASH = 2000;
 	
 	public Account(double balance, AccountProperties accountProperties, Double intrestRate, Double operationFee) 
 	{
@@ -64,10 +65,29 @@ public class Account
 		} 
 		else 
 		{
-			System.out.println("Sorry! Its the maximun daily maximum amount.");
+			System.out.println("Sorry! Its the maximum daily amount.");
 			return false;
 		}
 	}
-
+	
+	public boolean transferToAnotherAccount(int cashAmount) 
+	{
+		if (cashAmount <= MAXIMUM_TRANSFER_CASH) {
+			setBalance(balance - cashAmount);
+			activityOfData(ActivityName.MAKE_PAYMENT_TRANSFER, "transfer to the second user", (cashAmount*(-1)));
+			return true;
+		} else 
+		{
+			System.out.printf("Sorry! Its the maximum daily amount for transfer, ("+ MAXIMUM_TRANSFER_CASH+").");
+			return false;
+		}
+	}
+	
+	public void accountTransferredForMe(int cashAmount) 
+	{
+		setBalance(balance + cashAmount);
+		activityOfData(ActivityName.MAKE_PAYMENT_TRANSFER, "transferred to me from other user", cashAmount);
+	}
+	
 
 }

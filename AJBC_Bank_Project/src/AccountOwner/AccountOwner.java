@@ -123,8 +123,20 @@ public class AccountOwner extends Person
 	}
 	
 	
-	
-	
+	/**
+	 * User makes a withdrawal request through the app and get the funds when authenticated in an ATM.
+	 */
+	private void withdrawal()
+	{
+		System.out.print("What is the amount of cash you want to withdrawal? ");
+		int cashAmount = sc.nextInt();
+		
+		if(account.withdrawalCash(cashAmount)) 
+		{
+			System.out.printf("Successful withdrawal of: "+cashAmount);
+		}		
+	}
+		
 	private void produceReport(LocalDate start)
 	{
 		

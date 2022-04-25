@@ -32,10 +32,10 @@ public class Account
 		return balance;
 	}
 	
-	public void deposit(int amount) 
+	public void deposit(int cashAmount) 
 	{
-		setBalance(balance + amount);
-		activityOfData(ActivityName.DEPOSIT, "none",amount);
+		setBalance(balance + cashAmount);
+		activityOfData(ActivityName.DEPOSIT, "none",cashAmount);
 	}
 	
 	private void activityOfData(ActivityName activityName, String info,double balanceChange) 
@@ -52,6 +52,21 @@ public class Account
 			return;
 		}
 		activityDataArray[index++] = activityData;
+	}
+	
+	public boolean withdrawalCash(int cashAmount) 
+	{
+		if (accountProperties.maxWithdrawal >= cashAmount) 
+		{
+			setBalance(balance - cashAmount);
+			activityOfData(ActivityName.WITHDRAWAL, "none", (cashAmount*(-1)));
+			return true;
+		} 
+		else 
+		{
+			System.out.println("Sorry! Its the maximun daily maximum amount.");
+			return false;
+		}
 	}
 
 

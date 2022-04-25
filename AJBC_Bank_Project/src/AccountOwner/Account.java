@@ -7,14 +7,12 @@ public class Account
 	protected ActivityData[] activityData;
 	private Double intrestRate; //TODO add it to class diagram.
 	private Double fee; //TODO add it to class diagram.
-
 	
 	public Account(double balance, AccountProperties accountProperties) 
 	{
 		this.balance = balance;
 		this.accountProperties = accountProperties;
 	}
-
 	
 	public enum AccountProperties //The constant/enam values
 	{

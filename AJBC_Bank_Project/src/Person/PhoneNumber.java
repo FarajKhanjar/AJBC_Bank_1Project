@@ -1,57 +1,63 @@
 package Person;
 
-/*import java.util.Random;
+import java.util.Objects;
 
-public final class PhoneNumber 
-{
-    private final int area;   // area code (3 digits)
-    private final int mid;   // exchange  (3 digits)
-    private final int last;    // extension (4 digits)
-    Random random = new Random();
-
-    public PhoneNumber() 
-    {
-        this.area = random.nextInt(900)+100;
-        this.mid = random.nextInt(643)+100;
-        this.last  = random.nextInt(9000)+1000;
-    }
-    
-    public void getPhoneNumber()
-	{
-    	System.out.println(area+"-"+mid+"-"+last);
-    }
-
-}
-*/
+//import java.util.Random;
 
 public class PhoneNumber 
 {
+	private String areaCode;
+	private String restNumber;
+	
+	//Random random = new Random();
+	
+	public PhoneNumber(String areaCode, String restNumber) 
+	{
+		this.areaCode = areaCode;
+		this.restNumber = restNumber;
+	}
+	
+	public void setAreaCode(String areaCode) 
+	{
+		this.areaCode = areaCode;
+	}
+	
+	public void setPhoneNumber(String restNumber) 
+	{
+		this.restNumber = restNumber;
+	}
+	
+	public String getPhoneNumber()
+	{
+		return String.format(areaCode+"-"+restNumber);
+    }
+	
+	/**
+	 * In this method I build the full phonenumber
+	 * @param String phoneNumber
+	 * @return the full phonenumber in type "PhoneNumber"
+	 */
+	public static PhoneNumber getFullPhoneNumber(String phoneNumber) 
+	{
+		return new PhoneNumber("","");
+	}
+	
 
-	private int areaCode;
-	private float number;
-	
-	public PhoneNumber(int areaCode, float number) 
+	/**
+	 * Check if the phoneNumber is equal to the input phoneNumber. using Objects class.
+	 */
+	@Override
+	public boolean equals(Object phoneNumber) 
 	{
-		super();
-		this.areaCode = areaCode;
-		this.number = number;
+		if (this == phoneNumber)
+			return true;
+		if (phoneNumber == null)
+			return false;
+		if (getClass() != phoneNumber.getClass())
+			return false;
+		PhoneNumber other = (PhoneNumber) phoneNumber;
+		return Objects.equals(restNumber, other.restNumber) && Objects.equals(areaCode, other.areaCode);
 	}
-	
-	public int getAreaCode() 
-	{
-		return areaCode;
-	}
-	public void setAreaCode(int areaCode) 
-	{
-		this.areaCode = areaCode;
-	}
-	public float getPhoneNumber() 
-	{
-		return number;
-	}
-	public void setPhoneNumber(float number) 
-	{
-		this.number = number;
-	}
+		
 }
 

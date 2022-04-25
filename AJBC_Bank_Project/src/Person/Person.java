@@ -11,15 +11,14 @@ public class Person
 	private String lastName;
 	private PhoneNumber phoneNumber;
 	private LocalDate bitrthDate;
-	private double monthlyIncome;
+	//private double monthlyIncome;
 	
-	public Person(String firstName, String lastName, int areaCode, float number, LocalDate bitrthDate) 
+	public Person(String firstName, String lastName, PhoneNumber phoneNumber, LocalDate bitrthDate) 
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.phoneNumber.setAreaCode(areaCode);
-		this.phoneNumber.setPhoneNumber(number);
 		this.bitrthDate = bitrthDate;
+		setPhoneNumber(phoneNumber);
 	}
 
 	public String getFirstName() 
@@ -46,6 +45,11 @@ public class Person
 	{
 		return phoneNumber;
 	}
+	
+	public PhoneNumber getPhoneNumber(PhoneNumber phoneNumber) 
+	{
+		return phoneNumber;
+	}
 
 	public void setPhoneNumber(PhoneNumber phoneNumber) 
 	{
@@ -62,27 +66,19 @@ public class Person
 		this.bitrthDate = bitrthDate;
 	}
 
-	public double getMonthlyIncome() 
-	{
-		return monthlyIncome;
-	}
 
-	public void setMonthlyIncome(double monthlyIncome) 
-	{
-		this.monthlyIncome = monthlyIncome;
-	}
-	
 	/*
-	 * public static LocalDate setRandomBirthday() 
-	{
-		return LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70))));
-	}
-	
-	public void getBirthDate()
-	{
-	   System.out.println("randomDate: " + this.birthDate);	
-	}
+	 * public static LocalDate setRandomBirthday() { return
+	 * LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70)))); }
+	 * 
+	 * public void getBirthDate() { System.out.println("randomDate: " +
+	 * this.birthDate); }
 	 */
 
+	@Override
+	public String toString() {
+		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", PhoneNumber=" + phoneNumber
+				+ ", bitrthDate=" + bitrthDate + "]";
+	}
 }
 

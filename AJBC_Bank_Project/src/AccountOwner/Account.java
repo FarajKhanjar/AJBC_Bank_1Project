@@ -8,13 +8,15 @@ public class Account
 	protected double balance;
 	protected AccountProperties accountProperties;
 	protected ActivityData[] activityDataArray;	
-	private Double intrestRate; //TODO add it to class diagram.
-	private Double operationFee; //TODO add it to class diagram.
+	private double intrestRate; //TODO add it to class diagram.
+	private double operationFee; //TODO add it to class diagram.
 	private int index=0;
 	private final int MAXIMUM_TRANSFER_CASH = 2000;
 	private final int MAX_BILL_AMOUNT = 5000;
+	private int count = 0;
+	private final long accountNumber;
 	
-	public Account(double balance, AccountProperties accountProperties, Double intrestRate, Double operationFee) 
+	public Account(double balance, AccountProperties accountProperties, double intrestRate, double operationFee) 
 	{
 		this.balance = balance;
 		this.accountProperties = accountProperties;
@@ -22,6 +24,13 @@ public class Account
 		this.intrestRate = intrestRate;
 		this.operationFee = operationFee;
 		setBalance(0); //empty account.
+		this.accountNumber = count++;
+	}
+	
+	public Account(double balance) 
+	{
+		this.accountNumber = count++;
+		this.balance = balance;
 	}
 	
 	private void setBalance(double balance) 

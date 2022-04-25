@@ -1,6 +1,5 @@
 package AccountOwner;
 
-import BankManager.BankManager;
 import Person.Person;
 import Person.PhoneNumber;
 
@@ -18,20 +17,20 @@ public class AccountOwner extends Person
 	private Account account = null;
 	private double monthlyIncome;
 	private Credentials credentials;
-	private BankManager bankManager;
+	//private BankManager bankManager;
 	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
 	
 	static  Scanner sc1 ;
 	
 	//constructor
 	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate,
-			Account account, double monthlyIncome, Credentials credentials, BankManager bankManager) 
+			Account account, double monthlyIncome, Credentials credentials) 
 	{
 		super(firstName, lastName, phoneNumber, bitrthDate);
 		setAccount(account);
 		setMonthlyIncome(monthlyIncome);
 		setCredentials(credentials);
-		setManager(bankManager);
+		//setManager(bankManager);
 	}
 
 
@@ -40,7 +39,7 @@ public class AccountOwner extends Person
 		return account;
 	}
 		
-	private void setAccount(Account account) 
+	public void setAccount(Account account) 
 	{
 		this.account = account;
 	}
@@ -50,7 +49,7 @@ public class AccountOwner extends Person
 		return monthlyIncome;
 	}
 
-	private void setMonthlyIncome(double monthlyIncome) 
+	public void setMonthlyIncome(double monthlyIncome) 
 	{
 		this.monthlyIncome = monthlyIncome;
 	}
@@ -60,21 +59,22 @@ public class AccountOwner extends Person
 		return credentials;
 	}
 
-	private void setCredentials(Credentials credentials) 
+	public void setCredentials(Credentials credentials) 
 	{
 		this.credentials = credentials;
 	}
 		
-	public BankManager getManager() 
+  /*  public BankManager getManager() 
 	{
 		return bankManager;
 	}
+	
 
-	private void setManager(BankManager bankManager) 
+	private void setBankManager(BankManager bankManager) 
 	{
 		this.bankManager = bankManager;
 	}
-	
+	*/
 	public PhoneNumber getPhoneNumber() 
 	{
 		return super.getPhoneNumber();

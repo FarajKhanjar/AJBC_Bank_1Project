@@ -5,28 +5,28 @@ import java.time.LocalDateTime;
 public class ActivityData 
 {
 	protected ActivityName activityName;
-	protected Double balanceChange;
+	protected double balanceChange;
 	protected LocalDateTime timeStamp;
 	protected String info;
 	
-	public ActivityData(ActivityName activityName, double balanceChange, LocalDateTime timeStamp, String info) {
-		super();
+	public ActivityData(ActivityName activityName, LocalDateTime timeStamp, String info, double balanceChange) 
+	{
 		this.activityName = activityName;
-		this.balanceChange = balanceChange;
+		setBalanceChange(balanceChange);
 		this.timeStamp = timeStamp;
 		this.info = info;
 	}
 	
 
-	public enum ActivityName //The constant/enam values
+	private void setBalanceChange(double balanceChange) 
 	{
-		DEPOSIT,
-		WITHDRAWAL,
-		GET_LOAN,
-		MAKE_PAYMENT,
-		TRANSFER,
-		FEE_COLLECTION,
-		PAY_BILL;	
+		this.balanceChange = balanceChange;
+	}
+
+	@Override
+	public String toString() {
+		return "Activity data: [ activityName=" + activityName + ", timeStamp=" + timeStamp + ", info=" + info
+				+ ", balanceChange=" + balanceChange + "]";
 	}
 
 }

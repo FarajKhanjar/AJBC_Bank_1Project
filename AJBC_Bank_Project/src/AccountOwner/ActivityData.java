@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class ActivityData 
 {
-
 	protected ActivityName activityName;
 	protected Double balanceChange;
 	protected LocalDateTime timeStamp;

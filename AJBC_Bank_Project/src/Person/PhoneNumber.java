@@ -30,22 +30,27 @@ public class PhoneNumber
 	private int areaCode;
 	private float number;
 	
-	public PhoneNumber(int areaCode, float number) {
+	public PhoneNumber(int areaCode, float number) 
+	{
 		super();
 		this.areaCode = areaCode;
 		this.number = number;
 	}
 	
-	public int getAreaCode() {
+	public int getAreaCode() 
+	{
 		return areaCode;
 	}
-	public void setAreaCode(int areaCode) {
+	public void setAreaCode(int areaCode) 
+	{
 		this.areaCode = areaCode;
 	}
-	public float getPhoneNumber() {
+	public float getPhoneNumber() 
+	{
 		return number;
 	}
-	public void setPhoneNumber(float number) {
+	public void setPhoneNumber(float number) 
+	{
 		this.number = number;
 	}
 }

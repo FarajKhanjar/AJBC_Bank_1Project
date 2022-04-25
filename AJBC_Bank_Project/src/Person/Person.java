@@ -22,43 +22,53 @@ public class Person
 		this.bitrthDate = bitrthDate;
 	}
 
-	public String getFirstName() {
+	public String getFirstName() 
+	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName) 
+	{
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName() 
+	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName) 
+	{
 		this.lastName = lastName;
 	}
 
-	public PhoneNumber getPhoneNumber() {
+	public PhoneNumber getPhoneNumber() 
+	{
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(PhoneNumber phoneNumber) {
+	public void setPhoneNumber(PhoneNumber phoneNumber) 
+	{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public LocalDate getBitrthDate() {
+	public LocalDate getBitrthDate() 
+	{
 		return bitrthDate;
 	}
 
-	public void setBitrthDate(LocalDate bitrthDate) {
+	public void setBitrthDate(LocalDate bitrthDate) 
+	{
 		this.bitrthDate = bitrthDate;
 	}
 
-	public double getMonthlyIncome() {
+	public double getMonthlyIncome() 
+	{
 		return monthlyIncome;
 	}
 
-	public void setMonthlyIncome(double monthlyIncome) {
+	public void setMonthlyIncome(double monthlyIncome) 
+	{
 		this.monthlyIncome = monthlyIncome;
 	}
 	

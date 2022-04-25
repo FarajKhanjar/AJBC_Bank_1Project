@@ -12,8 +12,8 @@ public class BankManager extends AccountOwner
 	static Person[] usersToApprove;
 	static int index = 0;
 			
-	public BankManager(String firstName, String lastName, int areaCode, float number, LocalDate bitrthDate,
-			Account account, double monthlyIncome, Credentials credentials) 
+	public BankManager(String firstName, String lastName, int areaCode, float number,
+			LocalDate bitrthDate, Account account, double monthlyIncome, Credentials credentials) 
 	{
 		super(firstName, lastName, areaCode, number, bitrthDate, account, monthlyIncome, credentials);
 		this.usersToApprove = new AccountOwner[100];

@@ -20,18 +20,22 @@ public class BankManager extends AccountOwner
 	}
 	
 
-	public static void setUsersToApprove(Person usersToApprove) {
+	public static void setUsersToApprove(Person usersToApprove) 
+	{
 		BankManager.usersToApprove[index] = usersToApprove;
 		index++;
 	}
 
-
-	private void setAndApproveAcc() {
+	private void setAndApproveAcc() 
+	{
 		
 	}
-	private void addUserToApprove(AccountOwner accountOwner) {
+	
+	private void addUserToApprove(AccountOwner accountOwner) 
+	{
 		
 	}
+	
 	private void produceReport(LocalDate start) {
 		
 	}

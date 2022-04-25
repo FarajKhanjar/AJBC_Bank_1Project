@@ -42,5 +42,10 @@ public class AccountOwner extends Person
 	private void transferFunds()
 	{
 		
-	}	
+	}
+	
+	public String getAccountUserName()
+	{
+		return credentials.getUserName();
+	}
 }

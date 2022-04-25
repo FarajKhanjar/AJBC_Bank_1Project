@@ -12,6 +12,7 @@ public class Account
 	private Double operationFee; //TODO add it to class diagram.
 	private int index=0;
 	private final int MAXIMUM_TRANSFER_CASH = 2000;
+	private final int MAX_BILL_AMOUNT = 5000;
 	
 	public Account(double balance, AccountProperties accountProperties, Double intrestRate, Double operationFee) 
 	{
@@ -89,5 +90,19 @@ public class Account
 		activityOfData(ActivityName.MAKE_PAYMENT_TRANSFER, "transferred to me from other user", cashAmount);
 	}
 	
+	public boolean payBill(int cashAmount, String payeeType) 
+	{
+		if (MAX_BILL_AMOUNT>=cashAmount) 
+		{
+			setBalance(balance - cashAmount);
+			activityOfData(ActivityName.PAY_BILL, "Payee a bill of: " + payeeType, (cashAmount*(-1)));
+			return true;
+		} 
+		else 
+		{
+			System.out.printf("Sorry! Its the maximum daily amount to pay a bill, ("+MAX_BILL_AMOUNT+").");
+			return false;
+		}
+	}
 
 }

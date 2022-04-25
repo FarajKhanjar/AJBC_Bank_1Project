@@ -140,8 +140,9 @@ public class AccountOwner extends Person
 	}
 		
 	
-
-	
+    /**
+     * User makes a fast transfer to another user by providing a phone number and an amount.
+     */
 	private void transferFunds()
 	{
 		System.out.print("For transfer amount of many, Enter receiving user phone number: ");
@@ -161,6 +162,25 @@ public class AccountOwner extends Person
 				receiverAccount.account.accountTransferredForMe(cashAmount);
 				System.out.printf("Successful transfer of: "+cashAmount);
 			}
+		}
+	}
+	
+	
+	public void payBill() 
+	{
+		System.out.println("Choose which bill you want to pay: ");
+		for(Payee payeeType : Payee.values()) 
+		{
+			//print the types of bills
+			System.out.println(Payee.getIndexOfPayee(payeeType) +" . " + payeeType);
+		}
+		
+		int payee = sc.nextInt();
+		System.out.print("Who mush the bill is ? ");
+		int cashAmount = sc.nextInt();
+		if(account.payBill(cashAmount, Payee.getPayeeType(payee).toString())) 
+		{
+			System.out.printf("Successful to pay the bill of: "+cashAmount);
 		}
 	}
 	

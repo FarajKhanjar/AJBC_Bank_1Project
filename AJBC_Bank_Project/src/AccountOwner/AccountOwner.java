@@ -5,6 +5,7 @@ import Person.Person;
 import Person.PhoneNumber;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ import AppManager.AppManager;
 
 public class AccountOwner extends Person
 {
+	static  Scanner sc = new Scanner(System.in);
 	//fields
 	private Account account = null;
 	private double monthlyIncome;
@@ -19,7 +21,7 @@ public class AccountOwner extends Person
 	private BankManager bankManager;
 	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
 	
-	static  Scanner sc = new Scanner(System.in);
+	static  Scanner sc1 ;
 	
 	//constructor
 	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate,
@@ -218,11 +220,27 @@ public class AccountOwner extends Person
 		}
 	}
 	
-	
-	
-	private void produceReport(LocalDate start)
+	private void produceReport()
 	{
-		
-	}
-			
+		sc1 = new Scanner(System.in);
+
+		System.out.println("Enter start date:");
+		System.out.print("day: ");
+		int day = sc1.nextInt();
+		System.out.print("month: ");
+		int month = sc1.nextInt();
+		System.out.print("year: ");
+		int year = sc1.nextInt();
+
+		LocalDateTime timeStamp=(LocalDateTime.of(year, month, day, 0, 0));
+		ActivityData[] activities = account.getHistoryFromGivenDate(timeStamp);
+
+		System.out.println("The Activities from: "+timeStamp);
+		System.out.println();
+		for (ActivityData nameOfActivity : activities) 
+		{
+			System.out.println(nameOfActivity);
+		}
+		checkBalance();
+	}			
 }

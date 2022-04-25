@@ -116,5 +116,11 @@ public class Account
 		setBalance(balance + cashAmount);
 		activityOfData(ActivityName.GET_LOAN, "num of the payments is: " + paymentsNumber, cashAmount);
 	}
+	
+	
+	public ActivityData[] getHistoryFromGivenDate(LocalDateTime timeStamp) 
+	{
+		return new ActivityData[0];
+	}
 
 }

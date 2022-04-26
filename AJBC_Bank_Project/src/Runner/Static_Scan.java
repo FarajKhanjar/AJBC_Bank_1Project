@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * Create a static scanner for use in all classes.
+ * Its help to implement and check and depositCash
  * @author Faraj
  *
  */

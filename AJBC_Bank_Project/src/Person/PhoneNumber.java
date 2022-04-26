@@ -2,21 +2,29 @@ package Person;
 
 import java.util.Objects;
 
-//import java.util.Random;
-
+/**
+ * In this class we create a phoneNumber
+ * @author Faraj
+ *
+ */
 public class PhoneNumber 
 {
+	//Fields:
 	private String areaCode;
 	private String restNumber;
 	
-	//Random random = new Random();
-	
+	//Contractor:
 	public PhoneNumber(String areaCode, String restNumber) 
 	{
 		this.areaCode = areaCode;
 		this.restNumber = restNumber;
 	}
 	
+	
+	/**
+	 * Get and Set method help us to get values of the fields or set a new values.
+	 *
+	 */	
 	public void setAreaCode(String areaCode) 
 	{
 		this.areaCode = areaCode;
@@ -57,7 +65,5 @@ public class PhoneNumber
 			return false;
 		PhoneNumber other = (PhoneNumber) phoneNumber;
 		return Objects.equals(restNumber, other.restNumber) && Objects.equals(areaCode, other.areaCode);
-	}
-		
+	}	
 }
-

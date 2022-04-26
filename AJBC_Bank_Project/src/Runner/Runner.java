@@ -19,10 +19,9 @@ public class Runner
 	
 	public static void main(String[] args) 
 	{
-		Scanner scanner = Static_Scan.scanner;
-		
+		 Scanner scanner = Static_Scan.scanner;		
 		/**
-		 * Create database of the AJBC bank.
+		 * Create database of the AJBC manager bank.
 		 */		
 		BankManager AJBC_manager = createTheManagerAccount(); 
 		createUserDataBase(AJBC_manager);
@@ -41,17 +40,15 @@ public class Runner
 		createUserDataBase(AJBC_userAccount2);
 		AppManager appManager2 = new AppManager(AJBC_userAccount2);
 		//System.out.println(AJBC_userAccount2);
-		
-		//bankOwner.setAccount(account);
-		//index++;
-		//usersArray[index] = bankOwner;
-		//createUserDataBase(bankOwner);
-		//System.out.println(bankOwner);
 
-		appManager.runner();
+		appManager.runner(); //Go to the App-Menu.
 				
 	}
 	
+	/**
+	 * In this method we create The Manager Bank Account 
+	 * @return AJBC_manager= The Manager Bank Account
+	 */
 	public static BankManager createTheManagerAccount() 
 	{
 		Credentials credentials = new Credentials("Themanager", "m123456");
@@ -65,6 +62,10 @@ public class Runner
 		return AJBC_manager;
 	}
 	
+	/**
+	 * In this method we create a Bank Account 
+	 * @return bankOwner= with random values.
+	 */
 	public static AccountOwner createUserAccount() 
 	{
 		LocalDate birthDate = LocalDate.of(1993, 06, 28);
@@ -81,6 +82,10 @@ public class Runner
 		return bankOwner;
 	}
 	
+	/**
+	 * In this method we create another Bank Account 
+	 * @return bankOwner= with random values.
+	 */
 	public static AccountOwner createUserAccount1() 
 	{
 		LocalDate birthDate = LocalDate.of(1980, 05, 20);
@@ -97,14 +102,21 @@ public class Runner
 		return bankOwner;
 	}
 	
+	/**
+	 * In this method the AJBC_manager enter to our database array
+	 * @param AJBC_manager in D.B array
+	 */
 	public static void createUserDataBase(BankManager AJBC_manager) 
 	{		
 		usersArray[index] = AJBC_manager;
 	}
 	
+	/**
+	 * In this method the bankOwner enter to our database array
+	 * @param bankOwner in D.B array
+	 */
 	public static void createUserDataBase(AccountOwner bankOwner) 
-	{
-		
+	{	
 		index+=1;
 		usersArray[index] = bankOwner;
 	}

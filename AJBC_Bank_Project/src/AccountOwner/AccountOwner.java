@@ -12,6 +12,12 @@ import AppManager.AppManager;
 import BankManager.BankManager;
 import Runner.Static_Scan;
 
+/**
+ * The AccountOwner class get the basic info from "Person" class,
+ * In this class we will do the most method cases of the bank application.
+ * @author Faraj
+ *
+ */
 public class AccountOwner extends Person
 {
 
@@ -23,7 +29,7 @@ public class AccountOwner extends Person
 	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
 	private LocalDateTime lock = null;
 	
-	//constructor
+	//constructors
 	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate
 			, double monthlyIncome, Credentials credentials,BankManager bankManager ) 
 	{
@@ -42,6 +48,10 @@ public class AccountOwner extends Person
 		setMonthlyIncome(monthlyIncome);
 	}
 	
+	/**
+	 * In this method will run the Menu show in the application.
+	 * @return number input that sign of action in the application.
+	 */
 	public int runActionsMenu() 
 	{		
 		  while(true) 
@@ -58,6 +68,12 @@ public class AccountOwner extends Person
 		return 8;		
 	}
 	
+	/**
+	 * Its the second Menu that will show in the application,
+	 * it will shoe the actions that the users asked to do in the application,
+	 * here the user will enter a number input and because of this the system will do the action.
+	 * @return the number of action
+	 */
 	public void actionsMenu() 
 	{
 		  System.out.println("\n\nHi :),\n" 
@@ -69,6 +85,10 @@ public class AccountOwner extends Person
 		  
 	}
 	
+	/**
+	* With the help of Switch-case the system will go the action that the user choose as input.
+	* @param inputNumber = a helper to choose the action from the menu.
+	*/
 	public void bankActionsCheck(int temp) 
 	{
 		  switch(temp)
@@ -109,7 +129,10 @@ public class AccountOwner extends Person
 		  }
 	}
 
-
+	/**
+	 * Get an Set method help us to get values of the fields or set a new values.
+	 *
+	 */
 	public Account getAccount() 
 	{
 		return account;
@@ -140,17 +163,6 @@ public class AccountOwner extends Person
 		this.credentials = credentials;
 	}
 		
-  /*  public BankManager getManager() 
-	{
-		return bankManager;
-	}
-	
-
-	private void setBankManager(BankManager bankManager) 
-	{
-		this.bankManager = bankManager;
-	}
-	*/
 	public PhoneNumber getPhoneNumber() 
 	{
 		return super.getPhoneNumber();
@@ -309,6 +321,9 @@ public class AccountOwner extends Person
 		runActionsMenu();
 	}
 	
+	/**
+	 * The user is displayed with a full report of the account activity within a range of dates.
+	 */
 	private void produceReport()
 	{
 		System.out.println("Enter start date:");
@@ -338,7 +353,13 @@ public class AccountOwner extends Person
 		System.out.println("Good Buy");
 	}
 	
-	
+	/**
+	 * In this two methods, the user input a wrong password a three time,
+	 * Because of that, the system will lock the user for 30 min,
+	 * in this method we will check if the user is locked or not, 
+	 * if the user locked then will check the time used "LocalDateTime".
+	 * @return
+	 */
 	public boolean cheackIfAccountLocks() 
 	{
 		if(this.lock == null)

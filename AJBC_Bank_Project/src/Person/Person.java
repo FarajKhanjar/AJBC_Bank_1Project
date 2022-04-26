@@ -1,18 +1,27 @@
 package Person;
 
 import java.time.LocalDate;
-//import java.time.Period;
-//import java.util.Random;
 
-
+/**
+ * The Person Class its the basic class that create a person with the basic info,
+ * its the "father" class of "AccountOwner".
+ * @author Faraj
+ */
 public class Person 
 {
+	//Fields
 	private String firstName;
 	private String lastName;
 	private PhoneNumber phoneNumber;
 	private LocalDate bitrthDate;
-	//private double monthlyIncome;
 	
+	/**
+	 * Contractor - Person class
+	 * @param firstName of the person.
+	 * @param lastName of the person.
+	 * @param phoneNumber of the person, using the phoneNumber class.
+	 * @param bitrthDate of the person. in LocalDate format.
+	 */
 	public Person(String firstName, String lastName, PhoneNumber phoneNumber, LocalDate bitrthDate) 
 	{
 		this.firstName = firstName;
@@ -21,6 +30,10 @@ public class Person
 		setPhoneNumber(phoneNumber);
 	}
 
+	/**
+	 * Get an Set method help us to get values of the fields or set a new values.
+	 *
+	 */
 	public String getFirstName() 
 	{
 		return firstName;
@@ -67,14 +80,7 @@ public class Person
 	}
 
 
-	/*
-	 * public static LocalDate setRandomBirthday() { return
-	 * LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70)))); }
-	 * 
-	 * public void getBirthDate() { System.out.println("randomDate: " +
-	 * this.birthDate); }
-	 */
-
+	//Print a message of the info of the person.
 	@Override
 	public String toString() {
 		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", PhoneNumber=" + phoneNumber

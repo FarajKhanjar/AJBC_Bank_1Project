@@ -16,13 +16,12 @@ import Runner.Static_Scan;
 public class AppManager 
 {	
 	
-	private static  Scanner scan = new Scanner(System.in);
-	
+	private static Scanner scan = new Scanner(System.in);
 	public  AccountOwner[] usersArray  = {};
+	public  AccountOwner currentUser ;
 	
 	Scanner sc = new Scanner(System.in);
 	//Fileds
-	private AccountOwner currentUser = null;
 	private static int index=0;
 	private BankManager bankManager;
 	private PhoneNumber phoneNumber;
@@ -40,25 +39,32 @@ public class AppManager
 	{
 		setBankManager(bankManager);
 	}
+	public AppManager(AccountOwner accountOwner) 
+	{
+		setCurrentUser(accountOwner);
+	}
 	
 	public int runner() 
 	{		
 		  while(true) 
 		  {
 		    bankMenu();
-		    int temp = Integer.parseInt(sc.next());
-		    if(temp == 0)
+		    int temp = Integer.parseInt(Static_Scan.scanner.next());
+		    if(temp == 3)
+		    {
+		    	System.out.println("Good Buy");
 		      break;
+		     }
 		    bankManagerCheck(temp);
 		  }
-		return 0;
+		return 3;
 		
 	}
 
 	public void bankMenu() 
 	{
 		  System.out.println("You are welcome to our AJBC Bank :) ,\n");
-		  System.out.println("1. Login\n"+ "2. Open Account\n" + "3. Exit");
+		  System.out.println("1. Login\n"+ "2. Open Account\n" + "3. Exit\n");
 	}
 	
 	public void bankManagerCheck(int temp) 
@@ -76,8 +82,9 @@ public class AppManager
 			  System.out.println(bankManager);
 		  case 3: 			  
 			  logout();
-			  
-			  System.out.println(bankManager);		
+		  case 4: 			  
+			  login(this.phoneNumber);
+		
 		  }
 	}
 	
@@ -90,30 +97,24 @@ public class AppManager
 	private void setBankManager(BankManager manager) 
 	{
 		this.bankManager = manager;
+		for (int i = 0; i < usersArray.length; i++) 
+		{
+			Runner.usersArray[i] = usersArray[i];
+		}
 	}
 		
 	public void setCurrentUser(AccountOwner currentUser) 
 	{
 		this.currentUser = currentUser;
-		if (index >= Runner.usersArray.length) {
-			System.out.println("its full");
-			return;
+		for (int i = 0; i < usersArray.length; i++) 
+		{
+			Runner.usersArray[i] = usersArray[i];
 		}
-
-		Runner.usersArray[index++] = currentUser;
 	}
 
 	public AccountOwner[] getUsers() 
 	{
 		return Runner.usersArray;
-	}
-
-	public void setUsers(AccountOwner[] users) 
-	{
-		for (int i = 0; i < users.length; i++) 
-		{
-			Runner.usersArray[i] = users[i];
-		}
 	}
 
 	public static LocalDate createDate() 
@@ -133,85 +134,57 @@ public class AppManager
 	 * @param userName
 	 * @param password
 	 */
-/*	public void login()
+	public void login()
 	{
 		int index=0;
 		int counter=0; //The number of times the user tried to login to his account.
 		boolean checkUserName=false;
 		boolean checkPassword;
-		System.out.println("number of users: "+Runner.usersArray.length);
-		System.out.println(Runner.usersArray[index]+"\n");
-		
+		//System.out.println("number of users: "+Runner.usersArray.length);
+		//System.out.println(Runner.usersArray[index]+"\n");
+		//System.out.println(Runner.usersArray[index+1]+"\n");
 		System.out.println("Enter your Username please: {only letters and digits}");
 		String userName = scan.nextLine();
-		for (index=0 ; index<Runner.usersArray.length; index++) 
+		for ( index=0 ; Runner.usersArray[index]!=null; index++) 
 		{
-			System.out.println(Runner.usersArray[index].getCredentials().getUserName());
+			//System.out.println(Runner.usersArray[index].getCredentials().getUserName());
 			checkUserName=Runner.usersArray[index].getCredentials().getUserName().equals(userName);
 			if(checkUserName) 
 			{
-				while(counter < 3) 
+				if(Runner.usersArray[index].cheackIfAccountLocks()) 
 				{
+					System.out.println("For your safety, the account is locked for 30 minutes!");
+				}
+				else 
+				{
+				   while(counter < 3) 
+				  {
+					counter++;
 					System.out.println("Enter your Password please:  {4-8 chars, must contain digit and letter}");
 					String password = scan.nextLine();
-					System.out.println(Runner.usersArray[index].getCredentials().getPassword());
+					//System.out.println(Runner.usersArray[index].getCredentials().getPassword());
+					//System.out.println(Runner.usersArray[index+1].getCredentials().getPassword());
 					checkPassword = Runner.usersArray[index].getCredentials().getPassword().equals(password);
 					if (checkPassword) 
 					{
 						currentUser = Runner.usersArray[index];
+						if(Runner.usersArray[index].getCredentials().getUserName().equals("bankManager")) 
+						{
+							if(this.bankManager.getUsersToApprove()!=null)
+								this.bankManager.setAndApproveAccount();
+						}						
 						break;
-					} 
-					else 
-					{
-						counter++;						
-					}
+					} 					
+				  }
 				}
-			}
-			
-			if(counter == 3) 
-			{
-				System.out.println("For your safety, the account is locked for 30 minutes!");
-			}
-			else
-			{
-				currentUser.runActionsMenu();
-				break;
-			}
+				if(counter==3) 
+				{
+					Runner.usersArray[index].makeAccountLock();					
+				}
+				Runner.usersArray[index].runActionsMenu();
+			}	
 		}
-	}
-	
-*/	
-	private void login() 
-	{
-		int counter = 3;
-		String checkUserName,checkPassword = null;
-		int loginNumber = 0;
-		while(loginNumber<=counter) {
-			System.out.println("Enter your Username please: {only letters and digits}");
-			String userName = Static_Scan.scanner.next();
-			System.out.println("Enter your Password please:  {4-8 chars, must contain digit and letter}");
-			String password = Static_Scan.scanner.next();
-			
-			for (int i=0 ; i<Runner.usersArray.length ; i++)
-			{
-				System.out.println(Runner.usersArray[i]);
-				checkUserName = Runner.usersArray[i].getCredentials().getUserName();
-				if(userName.matches(checkUserName)) 
-					 checkPassword = Runner.usersArray[i].getCredentials().getPassword();
-					if(password.matches(checkPassword)) 
-						currentUser = Runner.usersArray[i];			
-			}
-			if(currentUser!=null)
-				break;
-			else {
-				System.out.println("Try one more time, you have "+loginNumber+" tumes for try.");
-				loginNumber++;
-			}		
-		}
-		if(loginNumber==3) 
-			System.out.println("For your safety, the account is locked for 30 minutes!");
-		else 
-			currentUser.runActionsMenu();
+		
 	}
 	
 
@@ -282,12 +255,12 @@ public class AppManager
 		    	Account account = new Account(1000);
 				this.bankManager = new BankManager(firstName, lastName, phoneNum, birthDate,credentials);
 				checkUserName = true;
-				System.out.println("Welcome "+userName+" you have Logged-in Successfully");
+				System.out.println("\n===>Welcome "+userName+" you have Logged-in Successfully\n");
 				(Runner.usersArray[i]).runActionsMenu();
 	        }
 		    else
 		    {
-		    	AccountOwner newOwner = new AccountOwner(firstName,lastName,phoneNum,birthDate,null,monthlyIncome,credentials);
+		    	AccountOwner newOwner = new AccountOwner(firstName,lastName,phoneNum,birthDate,credentials,monthlyIncome);
 		    	//this.AccountOwner[index++] = newOwner;
 		    	
 		    	this.currentUser.setCredentials(credentials);
@@ -312,6 +285,7 @@ public class AppManager
 	private void logout() 
 	{
 		this.currentUser=null;
+		Static_Scan.scanner.close();
 	}
 	
 		
@@ -319,7 +293,20 @@ public class AppManager
 	{
 		for (int i = 0; Runner.usersArray[i]!=null; i++) 
 		{
-			if(Runner.usersArray[i].getPhoneNumber() == phoneNumber) 
+			if(Runner.usersArray[i].getPhoneNumber().equals(phoneNumber)) 
+			{
+				return Runner.usersArray[i];
+			}
+		}
+		return null;
+	}
+	
+	public static AccountOwner getOwnerByUserName(String userName) 
+	{
+		for (int i = 0; Runner.usersArray[i]!=null; i++) 
+		{
+			System.out.println(Runner.usersArray[i].getCredentials().getUserName());
+			if(Runner.usersArray[i].getCredentials().getUserName().equals(userName)) 
 			{
 				return Runner.usersArray[i];
 			}

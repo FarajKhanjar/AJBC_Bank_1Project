@@ -30,8 +30,13 @@ public class BankManager extends AccountOwner
 		this.usersToApprove[index] = accountOwner;
 		index++;
 	}
+	
+	public AccountOwner[] getUsersToApprove() 
+	{
+		return usersToApprove;
+	}
 
-	private void setAndApproveAccount() 
+	public void setAndApproveAccount() 
 	{
 		for (int i = 0; this.usersToApprove[i]!=null; i++) 
 		{

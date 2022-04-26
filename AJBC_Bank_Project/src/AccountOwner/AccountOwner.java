@@ -9,28 +9,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 import AppManager.AppManager;
+import BankManager.BankManager;
+import Runner.Static_Scan;
 
 public class AccountOwner extends Person
 {
-	static  Scanner sc = new Scanner(System.in);
+
 	//fields
 	private Account account = null;
 	private double monthlyIncome;
 	private Credentials credentials;
-	//private BankManager bankManager;
+	private BankManager bankManager;
 	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
-	
-	static  Scanner sc1 ;
+	private LocalDateTime lock = null;
 	
 	//constructor
-	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate,
-			Account account, double monthlyIncome, Credentials credentials) 
+	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate
+			, double monthlyIncome, Credentials credentials,BankManager bankManager ) 
 	{
 		super(firstName, lastName, phoneNumber, bitrthDate);
 		setAccount(account);
 		setMonthlyIncome(monthlyIncome);
 		setCredentials(credentials);
-		//setManager(bankManager);
+		this.bankManager=bankManager;
 	}
 	
 	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber, LocalDate birthDate,
@@ -46,18 +47,20 @@ public class AccountOwner extends Person
 		  while(true) 
 		  {
 			actionsMenu();
-		    int temp = Integer.parseInt(sc.next());
-		    if(temp == 0)
-		      break;
+		    int temp = Integer.parseInt(Static_Scan.scanner.next());
+		    if(temp == 8)
+		    {
+		    	System.out.println("Good Buy!");
+		        break;
+		    }
 		    bankActionsCheck(temp);
 		  }
-		return 0;
-		
+		return 8;		
 	}
 	
 	public void actionsMenu() 
 	{
-		  System.out.println("Hi :),\n" 
+		  System.out.println("\n\nHi :),\n" 
 	                         +"Here you can show our Menu activities,\n" 
 				             + "Select what you are looking for:\n");
 		  System.out.println("1. Check Bank Balance\n" + "2. Produce Activity Report\n"
@@ -72,30 +75,36 @@ public class AccountOwner extends Person
 		  {
 		  case 0: 
 			  System.out.println("Try again");
+			  runActionsMenu();
 		  case 1:
-			  checkBalance();
-			  
+			  checkBalance();  
 			  break;
 		  case 2: 			  
 			  produceReport();
-			  
+			  break;
 		  case 3: 			  
 			  deposit();
+			  break;
 			
 		  case 4: 			  
 			  withdrawal();
+			  break;
 				
 		  case 5: 			  
 			  transferFunds();
+			  break;
 			  
 		  case 6: 			  
 			  payBill();
+			  break;
 			 
 		  case 7: 			  
 			  loanRequest();
+			  break;
 			  
 		  case 8: 			  
 			  logout();
+			  break;
 						  
 		  }
 	}
@@ -153,7 +162,8 @@ public class AccountOwner extends Person
 	 */
 	public void checkBalance()
 	{
-		System.out.println("Balance: " + account.getBalance());
+		System.out.println("The Balance of the account is: " + account.getBalance());
+		runActionsMenu();
 	}
 	
 	
@@ -163,21 +173,25 @@ public class AccountOwner extends Person
 	public void deposit()
 	{
 		int authenticationCode = createATMcode();
-		//System.out.println("Your code is: " + authenticationCode);
+		System.out.println("Now we will send you a code, make sure that you see it alone,");
+		System.out.println("Press '1' to see the code");
+		int temp = Integer.parseInt(Static_Scan.scanner.next());
+		System.out.println("Your code is: " + authenticationCode);
 		System.out.print("Enter your authentication code to deposit cash: ");
-		int enterCode = sc.nextInt();
+		int enterCode = Static_Scan.scanner.nextInt();
 
 		if (enterCode == authenticationCode) 
 		{
 			System.out.print("What is the amount of cash you want to deposit?");
-			int cashAmount = sc.nextInt();
+			int cashAmount = Static_Scan.scanner.nextInt();
 			account.deposit(cashAmount);
 			System.out.printf("Successful deposit of: "+cashAmount);
 		} 
 		else 
 		{
-			System.out.println("Your code incorrect.");
+			System.out.println("Something Wrong, this code is incorrect");
 		}
+		runActionsMenu();
 	}
 
 	/**
@@ -186,10 +200,10 @@ public class AccountOwner extends Person
 	 */
 	private int createATMcode() 
 	{
-		Random randNumCode = new Random();
 		int finalATMcode = 0;
-
-		for (int i = 0; i < 4; i++) {
+		Random randNumCode = new Random();		
+		for (int i = 0; i < 4; i++) 
+		{
 			finalATMcode *= 10;
 			finalATMcode += 1 + randNumCode.nextInt(9);
 		}
@@ -203,12 +217,13 @@ public class AccountOwner extends Person
 	private void withdrawal()
 	{
 		System.out.print("What is the amount of cash you want to withdrawal? ");
-		int cashAmount = sc.nextInt();
+		int cashAmount = Static_Scan.scanner.nextInt();
 		
-		if(account.withdrawalCash(cashAmount)) 
+		if(account.checkWithdrawalSelect(cashAmount)) 
 		{
 			System.out.printf("Successful withdrawal of: "+cashAmount);
-		}		
+		}
+		runActionsMenu();
 	}
 		
 	
@@ -217,10 +232,14 @@ public class AccountOwner extends Person
      */
 	private void transferFunds()
 	{
-		System.out.print("For transfer amount of many, Enter receiving user phone number: ");
-		String receiveNumber = sc.next();
+		/*System.out.print("For transfer amount of many, Enter receiving user phone number: ");
+		String receiveNumber = Static_Scan.scanner.next();
 		PhoneNumber phoneNumber = PhoneNumber.getFullPhoneNumber(receiveNumber);
 		AccountOwner receiverAccount = AppManager.getOwnerByPhoneNum(phoneNumber);
+		*/
+		System.out.print("For transfer amount of many, Enter receiving username: ");
+		String username = Static_Scan.scanner.next();
+		AccountOwner receiverAccount = AppManager.getOwnerByUserName(username);
 
 		if (receiverAccount == null) 
 		{
@@ -228,13 +247,14 @@ public class AccountOwner extends Person
 		} 
 		else {
 			System.out.print("For transfer amount of many,Enter amount of cash: ");
-			int cashAmount = sc.nextInt();
-			if (account.transferToAnotherAccount(cashAmount)) 
+			int cashAmount = Static_Scan.scanner.nextInt();
+			if (account.transferToAnotherAccount(cashAmount))
 			{
 				receiverAccount.account.accountTransferredForMe(cashAmount);
 				System.out.printf("Successful transfer of: "+cashAmount);
 			}
 		}
+		runActionsMenu();
 	}
 	
 	
@@ -250,9 +270,9 @@ public class AccountOwner extends Person
 			System.out.println(Payee.getIndexOfPayee(payeeType) +" . " + payeeType);
 		}
 		
-		int payee = sc.nextInt();
+		int payee = Static_Scan.scanner.nextInt();
 		System.out.print("Who mush the bill is ? ");
-		int cashAmount = sc.nextInt();
+		int cashAmount = Static_Scan.scanner.nextInt();
 		if(account.payBill(cashAmount, Payee.getPayeeType(payee).toString())) 
 		{
 			System.out.printf("Successful to pay the bill of: "+cashAmount);
@@ -266,12 +286,12 @@ public class AccountOwner extends Person
 	public void loanRequest() 
 	{
 		System.out.print("What is the amount of loan do you request?");
-		int amountOfLoan = sc.nextInt();
+		int amountOfLoan = Static_Scan.scanner.nextInt();
 		
 		if(account.checkLoanAmount(amountOfLoan))
 		{
 			System.out.print("What is your monthly payments? ");
-			int monthlyPaymentsNumber = sc.nextInt();
+			int monthlyPaymentsNumber = Static_Scan.scanner.nextInt();
 			if(MAXIMUM_Payments_Number >= monthlyPaymentsNumber) 
 			{
 				account.getLoanAmount(amountOfLoan, monthlyPaymentsNumber);
@@ -286,19 +306,18 @@ public class AccountOwner extends Person
 		{
 			System.out.println("Sorry... this amount is bigger then maximum loan.");
 		}
+		runActionsMenu();
 	}
 	
 	private void produceReport()
 	{
-		sc1 = new Scanner(System.in);
-
 		System.out.println("Enter start date:");
 		System.out.print("day: ");
-		int day = sc1.nextInt();
+		int day = Static_Scan.scanner.nextInt();
 		System.out.print("month: ");
-		int month = sc1.nextInt();
+		int month = Static_Scan.scanner.nextInt();
 		System.out.print("year: ");
-		int year = sc1.nextInt();
+		int year = Static_Scan.scanner.nextInt();
 
 		LocalDateTime timeStamp=(LocalDateTime.of(year, month, day, 0, 0));
 		ActivityData[] activities = account.getHistoryFromGivenDate(timeStamp);
@@ -310,11 +329,27 @@ public class AccountOwner extends Person
 			System.out.println(nameOfActivity);
 		}
 		checkBalance();
+		runActionsMenu();
 	}
 	
 	private void logout() 
 	{
 		account=null;
 		System.out.println("Good Buy");
+	}
+	
+	
+	public boolean cheackIfAccountLocks() 
+	{
+		if(this.lock == null)
+			return false;
+		if(this.lock.getMinute()+30 > LocalDateTime.now().getMinute())
+			return true;
+		return false;
+	}
+	
+	public void makeAccountLock() 
+	{
+		this.lock = LocalDateTime.now();
 	}
 }

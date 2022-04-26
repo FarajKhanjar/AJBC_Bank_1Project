@@ -23,7 +23,7 @@ public class Account
 		activityDataArray = new ActivityData[100];
 		this.intrestRate = intrestRate;
 		this.operationFee = operationFee;
-		setBalance(0); //empty account.
+		setBalance(balance); 
 		this.accountNumber = count++;
 	}
 	
@@ -65,24 +65,29 @@ public class Account
 		activityDataArray[index++] = activityData;
 	}
 	
-	public boolean withdrawalCash(int cashAmount) 
+	public boolean checkWithdrawalSelect(int cashAmount) 
 	{
+		boolean flag=true;
+		System.out.println(accountProperties.maxWithdrawal);
+		System.out.println(accountProperties);
 		if (accountProperties.maxWithdrawal >= cashAmount) 
 		{
 			setBalance(balance - cashAmount);
-			activityOfData(ActivityName.WITHDRAWAL, "none", (cashAmount*(-1)));
-			return true;
+			activityOfData(ActivityName.WITHDRAWAL, "none", (cashAmount*(-1)));			
 		} 
 		else 
 		{
 			System.out.println("Sorry! Its the maximum daily amount.");
-			return false;
+			flag=false;
+			
 		}
+		return flag;
 	}
 	
 	public boolean transferToAnotherAccount(int cashAmount) 
 	{
-		if (cashAmount <= MAXIMUM_TRANSFER_CASH) {
+		if (cashAmount <= MAXIMUM_TRANSFER_CASH) 
+		{
 			setBalance(balance - cashAmount);
 			activityOfData(ActivityName.MAKE_PAYMENT_TRANSFER, "transfer to the second user", (cashAmount*(-1)));
 			return true;

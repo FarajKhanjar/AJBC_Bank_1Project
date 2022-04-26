@@ -18,8 +18,8 @@ public class Runner
 	private static int index;
 	
 	public static void main(String[] args) 
-	{
-		 Scanner scanner = Static_Scan.scanner;		
+	{		
+		Scanner scanner = Static_Scan.scanner;		
 		/**
 		 * Create database of the AJBC manager bank.
 		 */		
@@ -120,6 +120,4 @@ public class Runner
 		index+=1;
 		usersArray[index] = bankOwner;
 	}
-
-
 }

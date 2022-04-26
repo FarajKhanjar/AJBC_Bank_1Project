@@ -13,6 +13,11 @@ import BankManager.BankManager;
 import Person.PhoneNumber;
 import Runner.Static_Scan;
 
+/**
+ * In this class the banking application start, here will shoe the actions to do.
+ * @author Faraj
+ *
+ */
 public class AppManager 
 {	
 	
@@ -20,30 +25,33 @@ public class AppManager
 	public  AccountOwner[] usersArray  = {};
 	public  AccountOwner currentUser ;
 	
-	Scanner sc = new Scanner(System.in);
 	//Fileds
 	private static int index=0;
 	private BankManager bankManager;
 	private PhoneNumber phoneNumber;
 	
-	//Constructors
-	/*
-	public AppManager(AccountOwner currentUser, AccountOwner[] users) 
-	{
-		setCurrentUser(currentUser);
-		setUsers(users);
-	}
-	*/
-	
+	/**
+	 * Contractor of:
+	 * @param bankManager
+	 */
 	public AppManager(BankManager bankManager) 
 	{
 		setBankManager(bankManager);
 	}
+	
+	/**
+	 * Contractor of:
+	 * @param accountOwner
+	 */
 	public AppManager(AccountOwner accountOwner) 
 	{
 		setCurrentUser(accountOwner);
 	}
 	
+	/**
+	 * In this method will run the Menu show in the application.
+	 * @return number input that sign of action in the application.
+	 */
 	public int runner() 
 	{		
 		  while(true) 
@@ -61,15 +69,24 @@ public class AppManager
 		
 	}
 
+	/**
+	 * The first Menu is the three actions of login, logout, and create new account.
+	 * here the user will enter a number input and because of this the system will do the action
+	 * @return the number of action
+	 */
 	public void bankMenu() 
 	{
 		  System.out.println("You are welcome to our AJBC Bank :) ,\n");
 		  System.out.println("1. Login\n"+ "2. Open Account\n" + "3. Exit\n");
 	}
 	
-	public void bankManagerCheck(int temp) 
+	/**
+	 * With the help of Switch-case the system will go the action that the user choose as input.
+	 * @param inputNumber = a helper to choose the action from the menu.
+	 */
+	public void bankManagerCheck(int inputNumber) 
 	{
-		  switch(temp)
+		  switch(inputNumber)
 		  {
 		  case 0: 
 			  System.out.println("Try again");
@@ -83,17 +100,29 @@ public class AppManager
 		  case 3: 			  
 			  logout();
 		  case 4: 			  
-			  login(this.phoneNumber);
-		
+			  login(this.phoneNumber);		
 		  }
 	}
 	
-	
+	/**
+	 * Get an Set method help us to get values of the fields or set a new values.
+	 *
+	 */
 	public AccountOwner getCurrentUser() 
 	{
 		return currentUser;
 	}
 
+
+	public AccountOwner[] getUsers() 
+	{
+		return Runner.usersArray;
+	}
+
+	/**
+	 * in this method will insert the manager of the bank account to the dataBase array.
+	 * @param manager
+	 */
 	private void setBankManager(BankManager manager) 
 	{
 		this.bankManager = manager;
@@ -103,6 +132,10 @@ public class AppManager
 		}
 	}
 		
+	/**
+	 * in this method will insert the currentUser of the bank account to the dataBase array.
+	 * @param currentUser
+	 */
 	public void setCurrentUser(AccountOwner currentUser) 
 	{
 		this.currentUser = currentUser;
@@ -111,15 +144,13 @@ public class AppManager
 			Runner.usersArray[i] = usersArray[i];
 		}
 	}
-
-	public AccountOwner[] getUsers() 
-	{
-		return Runner.usersArray;
-	}
-
+	
+	/**
+	 * In this method we will get a random Date as a LocalDate format.
+	 * @return
+	 */
 	public static LocalDate createDate() 
 	{
-
 		//LocalDate date = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
 		// DateTimeFormat ("dd, MMM, yyyy");
 		//return date;
@@ -141,8 +172,6 @@ public class AppManager
 		boolean checkUserName=false;
 		boolean checkPassword;
 		//System.out.println("number of users: "+Runner.usersArray.length);
-		//System.out.println(Runner.usersArray[index]+"\n");
-		//System.out.println(Runner.usersArray[index+1]+"\n");
 		System.out.println("Enter your Username please: {only letters and digits}");
 		String userName = scan.nextLine();
 		for ( index=0 ; Runner.usersArray[index]!=null; index++) 
@@ -163,7 +192,6 @@ public class AppManager
 					System.out.println("Enter your Password please:  {4-8 chars, must contain digit and letter}");
 					String password = scan.nextLine();
 					//System.out.println(Runner.usersArray[index].getCredentials().getPassword());
-					//System.out.println(Runner.usersArray[index+1].getCredentials().getPassword());
 					checkPassword = Runner.usersArray[index].getCredentials().getPassword().equals(password);
 					if (checkPassword) 
 					{
@@ -247,12 +275,10 @@ public class AppManager
 			System.out.print("Enter a Password: {4-8 chars, must contain digit and letter}" );
 			String password = scan.next();
 			
-			//currentUser.setMonthlyIncome(monthlyIncome);
 			Credentials credentials = new Credentials(userName,password);
 		    checkUserName=Runner.usersArray[i].getCredentials().getUserName().equals(userName);
 		    if(!checkUserName)
 		    {
-		    	Account account = new Account(1000);
 				this.bankManager = new BankManager(firstName, lastName, phoneNum, birthDate,credentials);
 				checkUserName = true;
 				System.out.println("\n===>Welcome "+userName+" you have Logged-in Successfully\n");
@@ -261,14 +287,12 @@ public class AppManager
 		    else
 		    {
 		    	AccountOwner newOwner = new AccountOwner(firstName,lastName,phoneNum,birthDate,credentials,monthlyIncome);
-		    	//this.AccountOwner[index++] = newOwner;
 		    	
 		    	this.currentUser.setCredentials(credentials);
 		    	setCurrentUser(newOwner);
 				bankManager.setUsersToApprove(newOwner);
 				System.out.println(newOwner);	
-		    }
-			
+		    }			
 		}
 		else 
 		{
@@ -280,7 +304,7 @@ public class AppManager
 	
 	
 	/**
-	 * A method for logout the system.
+	 * A method for logout from the system.
 	 */
 	private void logout() 
 	{
@@ -288,7 +312,11 @@ public class AppManager
 		Static_Scan.scanner.close();
 	}
 	
-		
+	/**
+	 * In this method we will get the owner of a account by the user phoneNumber.	
+	 * @param phoneNumber
+	 * @return the bank account.
+	 */
 	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNumber) 
 	{
 		for (int i = 0; Runner.usersArray[i]!=null; i++) 
@@ -301,6 +329,11 @@ public class AppManager
 		return null;
 	}
 	
+	/**
+	 * In this method we will get the owner of a account by the userName.	
+	 * @param userName
+	 * @return the bank account.
+	 */
 	public static AccountOwner getOwnerByUserName(String userName) 
 	{
 		for (int i = 0; Runner.usersArray[i]!=null; i++) 
@@ -312,7 +345,5 @@ public class AppManager
 			}
 		}
 		return null;
-	}
-			
+	}			
 }
-

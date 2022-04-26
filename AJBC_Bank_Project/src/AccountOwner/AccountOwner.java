@@ -32,6 +32,73 @@ public class AccountOwner extends Person
 		setCredentials(credentials);
 		//setManager(bankManager);
 	}
+	
+	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber, LocalDate birthDate,
+			Credentials credentials, double monthlyIncome) 
+	{
+		super(firstName, lastName, phoneNumber, birthDate);
+		setCredentials(credentials);
+		setMonthlyIncome(monthlyIncome);
+	}
+	
+	public int runActionsMenu() 
+	{		
+		  while(true) 
+		  {
+			actionsMenu();
+		    int temp = Integer.parseInt(sc.next());
+		    if(temp == 0)
+		      break;
+		    bankActionsCheck(temp);
+		  }
+		return 0;
+		
+	}
+	
+	public void actionsMenu() 
+	{
+		  System.out.println("Hi :),\n" 
+	                         +"Here you can show our Menu activities,\n" 
+				             + "Select what you are looking for:\n");
+		  System.out.println("1. Check Bank Balance\n" + "2. Produce Activity Report\n"
+		                      + "3. Make a deposit\n" + "4. Make a Withdrawal\n" + "5. Transfer funds\n" 
+				              + "6. Pay bill\n" + "7. Get Loan\n" + "8.Exit");
+		  
+	}
+	
+	public void bankActionsCheck(int temp) 
+	{
+		  switch(temp)
+		  {
+		  case 0: 
+			  System.out.println("Try again");
+		  case 1:
+			  checkBalance();
+			  
+			  break;
+		  case 2: 			  
+			  produceReport();
+			  
+		  case 3: 			  
+			  deposit();
+			
+		  case 4: 			  
+			  withdrawal();
+				
+		  case 5: 			  
+			  transferFunds();
+			  
+		  case 6: 			  
+			  payBill();
+			 
+		  case 7: 			  
+			  loanRequest();
+			  
+		  case 8: 			  
+			  logout();
+						  
+		  }
+	}
 
 
 	public Account getAccount() 
@@ -79,6 +146,7 @@ public class AccountOwner extends Person
 	{
 		return super.getPhoneNumber();
 	}
+	
 	
 	/**
 	 * Check account balance.
@@ -242,5 +310,11 @@ public class AccountOwner extends Person
 			System.out.println(nameOfActivity);
 		}
 		checkBalance();
-	}			
+	}
+	
+	private void logout() 
+	{
+		account=null;
+		System.out.println("Good Buy");
+	}
 }

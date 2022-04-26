@@ -10,15 +10,18 @@ import java.util.Arrays;
 
 public class BankManager extends AccountOwner
 {	
-	private AccountOwner[] usersToApprove;
-	private int index = 0;
-	private AccountProperties accountProperties;
+	public AccountOwner[] usersToApprove;
+	public int index = 0;
+	public AccountProperties accountProperties;
 			
+	
 	public BankManager(String firstName, String lastName, PhoneNumber phoneNumber,
-			LocalDate bitrthDate, Account account, double monthlyIncome, Credentials credentials) 
+			LocalDate birthDate, Credentials credentials) 
 	{
-		super(firstName, lastName, phoneNumber, bitrthDate, account, monthlyIncome, credentials);
-		this.usersToApprove = new AccountOwner[100];
+			super(firstName, lastName,phoneNumber, birthDate, credentials, 0);
+			this.usersToApprove = new AccountOwner[100];
+			this.index = 0;
+			createTheManagerAccount();
 	}
 	
 
@@ -28,7 +31,7 @@ public class BankManager extends AccountOwner
 		index++;
 	}
 
-	private void setAndApproveAcc() 
+	private void setAndApproveAccount() 
 	{
 		for (int i = 0; this.usersToApprove[i]!=null; i++) 
 		{
@@ -37,6 +40,12 @@ public class BankManager extends AccountOwner
 			this.usersToApprove[i].setAccount(account);
 		}
 		usersToApprove = null;
+	}
+	
+	private void createTheManagerAccount() 
+	{
+		Account account = new Account(500000d,AccountProperties.TITANIUM, 0, 0);
+		setAccount(account);
 	}
 	
 	private void addUserToApprove(AccountOwner accountOwner) 

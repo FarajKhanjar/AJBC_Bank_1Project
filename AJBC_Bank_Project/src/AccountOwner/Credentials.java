@@ -71,5 +71,4 @@ public class Credentials
 		else
 			return false;
 	}
-	
 }

@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  * The BankManager class is create and give us a basic info of the bank manager from "Person" class,
- * The bank manager are responsible of Approve users to enter the bank, and change details.
+ * The bank manager are responsible of Approve users to enter the bank, and change details
  * @author Faraj
  */
 public class BankManager extends AccountOwner

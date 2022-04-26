@@ -1,21 +1,31 @@
 package AccountOwner;
 
+/**
+ * In this Class we will create the Credentials info,
+ *  it will help the user get info and enter the application.
+ * @author Faraj
+ */
 public class Credentials 
 {
 	//fields
 	private String userName;
 	private String password;
 	
-	//Contractor
+	/**
+	 * Constructor
+	 * @param userName of the account
+	 * @param password of the account
+	 */
 	public Credentials(String userName, String password) 
 	{
 		setUserName(userName);
 		setPassword(password);
-		
-		//System.out.printf("User %s has been created \n", userName);
-	    //System.out.printf("Enter 'login' to log in or 'register' to open another account");
 	}
 	
+	/**
+	 * Get an Set method help us to get values of the fields or set a new values.
+	 *
+	 */
 	public String getUserName() 
 	{
 		return userName;
@@ -25,8 +35,7 @@ public class Credentials
 	{
 		return password;
 	}
-	
-	
+		
 	public void setUserName(String userName) 
 	{
 		boolean checkUserNameLD = cheackLettersAndDigits(userName); 
@@ -48,9 +57,15 @@ public class Credentials
 		}	
 	}
 	
-    private boolean cheackLettersAndDigits(String userName)
+    /**
+     * In this method will check if the user enter a correct values,
+     * of the userName and the password that he write in the console.
+     * @param userName: check the string input.
+     * @return True or False.
+     */
+	private boolean cheackLettersAndDigits(String userStr)
 	{
-		if(userName.matches("[a-zA-Z0-9]*")) {
+		if(userStr.matches("[a-zA-Z0-9]*")) {
 			return true;
 		}
 		else

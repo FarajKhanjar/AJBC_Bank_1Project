@@ -1,6 +1,13 @@
 package AccountOwner;
 
-public enum Payee {
+/**
+ * In this class we will dell with the coast values og the pay-options.
+ * Its enum.
+ * @author Faraj
+ *
+ */
+public enum Payee 
+{
 	The_AJBC_BANK, PHONE, WATER, ELECTRIC;
 
 	public static Payee getPayeeType(int index) 
@@ -20,6 +27,11 @@ public enum Payee {
 		}
 	}
 
+	/**
+	 * A method that help us get to the interested pay company/Bank that we want.
+	 * @param payee, there are 4 options.
+	 * @return
+	 */
 	public static int getIndexOfPayee(Payee payee) 
 	{
 		switch (payee) 

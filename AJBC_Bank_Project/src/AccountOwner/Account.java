@@ -2,9 +2,14 @@ package AccountOwner;
 
 import java.time.LocalDateTime;
 
+/**
+ * In This class we create an account of bank that base on many values.
+ * @author Faraj
+ *
+ */
 public class Account 
-{
-	
+{	
+	//Fields:
 	protected double balance;
 	protected AccountProperties accountProperties;
 	protected ActivityData[] activityDataArray;	
@@ -14,8 +19,15 @@ public class Account
 	private final int MAXIMUM_TRANSFER_CASH = 2000;
 	private final int MAX_BILL_AMOUNT = 5000;
 	private int count = 0;
-	private final long accountNumber;
+	private int accountNumber;
 	
+	/**
+	 * Contractor:
+	 * @param balance of the account.
+	 * @param accountProperties = The account type (Bronze or Silver or Gold or Titanium)
+	 * @param intrestRate = a value who belongs to any bank account and based on his type.
+	 * @param operationFee = = a value who belongs to any bank account and based on his type.
+	 */
 	public Account(double balance, AccountProperties accountProperties, double intrestRate, double operationFee) 
 	{
 		this.balance = balance;
@@ -24,7 +36,6 @@ public class Account
 		this.intrestRate = intrestRate;
 		this.operationFee = operationFee;
 		setBalance(balance); 
-		this.accountNumber = count++;
 	}
 	
 	public Account(double balance) 
@@ -33,6 +44,10 @@ public class Account
 		this.balance = balance;
 	}
 	
+	/**
+	 * Get and Set method help us to get values of the fields or set a new values.
+	 *
+	 */	
 	private void setBalance(double balance) 
 	{
 		this.balance = balance;
@@ -43,18 +58,33 @@ public class Account
 		return balance;
 	}
 	
+	/**
+	 *  user clicks on the make a deposit button and by using an authentication 4 digits code,
+	 *  he will deposit cash.
+	 * @param cashAmount: its the value of money that the user want to deposit.
+	 */
 	public void deposit(int cashAmount) 
 	{
 		setBalance(balance + cashAmount);
 		activityOfData(ActivityName.DEPOSIT, "none",cashAmount);
 	}
 	
+	/**
+	 * In this method we will create one activity data of one account
+	 * @param activityName: MAKE_PAYMENT_TRANSFER, PAY_BILL, DEPOSIT, WITHDRAWAL, GET_LOAN, FEE_COLLECTION;
+	 * @param info: get info using LocalDateTime.
+	 * @param balanceChange: change in balance.
+	 */
 	private void activityOfData(ActivityName activityName, String info,double balanceChange) 
 	{
 		ActivityData activityData = new ActivityData(activityName, LocalDateTime.now() ,info ,balanceChange);
 		activityDataArray(activityData);
 	}
 	
+	/**
+	 * After create one activity we intrested to push in a array of data activity.
+	 * @param activityData - in the same length of the number of users.
+	 */
 	private void activityDataArray(ActivityData activityData) 
 	{
 		if (activityDataArray.length <= index) 
@@ -65,9 +95,14 @@ public class Account
 		activityDataArray[index++] = activityData;
 	}
 	
+	/**
+	 * In this method will check if to user able to get a cash by Withdrawal.
+	 * @param cashAmount: its the value of money that the user want to Withdrawal.
+	 * @return True or False and print a message.
+	 */
 	public boolean checkWithdrawalSelect(int cashAmount) 
 	{
-		boolean flag=true;
+		boolean flag=true; //default value
 		System.out.println(accountProperties.maxWithdrawal);
 		System.out.println(accountProperties);
 		if (accountProperties.maxWithdrawal >= cashAmount) 
@@ -84,6 +119,12 @@ public class Account
 		return flag;
 	}
 	
+	/**
+	 * In this method will check if to user able to transfer a cash to another account
+	 * @param cashAmount: its the value of money that the user want to Withdrawal.
+	 * the balance of the account of course change if its True.
+	 * @return True or False and print a message.
+	 */
 	public boolean transferToAnotherAccount(int cashAmount) 
 	{
 		if (cashAmount <= MAXIMUM_TRANSFER_CASH) 
@@ -98,12 +139,25 @@ public class Account
 		}
 	}
 	
+	/**
+	 * This method show us the case that there is a account that transfer money for me
+	 * @param cashAmount: its the value of money that the user want to transfer to me.
+	 * the balance of the account of course change if its True.
+	 */
 	public void accountTransferredForMe(int cashAmount) 
 	{
 		setBalance(balance + cashAmount);
 		activityOfData(ActivityName.MAKE_PAYMENT_TRANSFER, "transferred to me from other user", cashAmount);
 	}
 	
+	/**
+	 * In this method will check if to user able to pay a Bill.
+	 * @param cashAmount: its the value of money that the user want to Withdrawal.
+	 * the balance of the account of course change if its True.
+	 * @param payeeType its the kind of the bill that the user want to pay:
+	 * It can be The_AJBC_BANK, PHONE, WATER, ELECTRIC Company
+	 * @return True or False and print a message.
+	 */
 	public boolean payBill(int cashAmount, String payeeType) 
 	{
 		if (MAX_BILL_AMOUNT>=cashAmount) 
@@ -119,22 +173,36 @@ public class Account
 		}
 	}
 	
-	
+	/**
+	 * In this method will check if to user able to get a loan
+	 * @param cashAmount: its the value of money that the user want to get a loan of.
+	 * the balance of the account of course change if its True.
+	 * @return True or False and print a message.
+	 */
 	public boolean checkLoanAmount(int cashAmount) 
 	{
 		return cashAmount <= accountProperties.maxLoan;
 	}
 	
+	/**
+	 * If the user able to get a loan, in this method we will set the new balance and print a massage,
+	 * In case the number of payments exceeds sixty, the user is prompt with a message and the operation terminates.
+	 * @param cashAmount: its the value of money that the user want to get a loan of.
+	 * @param paymentsNumber: 
+	 */
 	public void getLoanAmount(int cashAmount, int paymentsNumber) 
 	{
 		setBalance(balance + cashAmount);
 		activityOfData(ActivityName.GET_LOAN, "num of the payments is: " + paymentsNumber, cashAmount);
 	}
 	
-	
+	/**
+	 * In this method we interested to get the history of the actions in the account by a start date.
+	 * @param timeStamp
+	 * @return
+	 */
 	public ActivityData[] getHistoryFromGivenDate(LocalDateTime timeStamp) 
 	{
 		return new ActivityData[0];
 	}
-
 }

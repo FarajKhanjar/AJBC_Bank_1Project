@@ -51,13 +51,13 @@ public class Runner
 	 */
 	public static BankManager createTheManagerAccount() 
 	{
-		Credentials credentials = new Credentials("Themanager", "m123456");
+		Credentials credentials = new Credentials("Faraj123", "f123456");
 		PhoneNumber phoneNumber = new PhoneNumber("050", "9909129");
 		LocalDate birthDate = LocalDate.of(1990, 07, 26);
 		double monthlyIncome = 15000;
-		double balance = 75000;
-		BankManager AJBC_manager = new BankManager("Guy", "Turgi",phoneNumber, birthDate, credentials);
-		AccountOwner bankOwner = new AccountOwner("Guy", "Turgi" ,phoneNumber, birthDate,monthlyIncome, credentials ,AJBC_manager);
+		double balance = 250000;
+		BankManager AJBC_manager = new BankManager("Faraj", "Khanjar",phoneNumber, birthDate, credentials);
+		AccountOwner bankOwner = new AccountOwner("Faraj", "Khanjar" ,phoneNumber, birthDate,monthlyIncome, credentials ,AJBC_manager);
 		Account account = new Account(balance,AccountProperties.TITANIUM, 0d, 0d);
 		return AJBC_manager;
 	}
@@ -69,12 +69,12 @@ public class Runner
 	public static AccountOwner createUserAccount() 
 	{
 		LocalDate birthDate = LocalDate.of(1993, 06, 28);
-		Credentials credentials = new Credentials("FarajKH", "f12345");
+		Credentials credentials = new Credentials("Rami123", "m123456");
 		PhoneNumber phoneNumber = new PhoneNumber("054", "2459909");
         //System.out.println(phoneNumber.getPhoneNumber());	
 		double monthlyIncome = 20000;
-		String firstName = "Faraj";
-		String lastName = "Khanjar";		
+		String firstName = "Rami";
+		String lastName = "mad";		
 		double balance = 25000;
 
 		AccountOwner bankOwner = new AccountOwner(firstName, lastName ,phoneNumber, birthDate,credentials,monthlyIncome);

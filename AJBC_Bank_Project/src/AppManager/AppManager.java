@@ -98,9 +98,7 @@ public class AppManager
 			  OpenAccount();
 			  System.out.println(bankManager);
 		  case 3: 			  
-			  logout();
-		  case 4: 			  
-			  login(this.phoneNumber);		
+			  logout();	
 		  }
 	}
 	
@@ -281,8 +279,10 @@ public class AppManager
 		    {
 				this.bankManager = new BankManager(firstName, lastName, phoneNum, birthDate,credentials);
 				checkUserName = true;
-				System.out.println("\n===>Welcome "+userName+" you have Logged-in Successfully\n");
-				(Runner.usersArray[i]).runActionsMenu();
+				//System.out.println("\n===>Welcome "+userName+" you have Logged-in Successfully\n");
+				System.out.println("\n===>Welcome "+userName+", Now our Bank manager have to approve you, try again later\n");
+				//(Runner.usersArray[i]).runActionsMenu();
+				runner();
 	        }
 		    else
 		    {
@@ -300,8 +300,6 @@ public class AppManager
 			login();
 		}		
 	}
-	
-	
 	
 	/**
 	 * A method for logout from the system.

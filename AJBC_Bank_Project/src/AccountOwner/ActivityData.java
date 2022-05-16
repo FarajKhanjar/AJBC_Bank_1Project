@@ -37,6 +37,17 @@ public class ActivityData
 	{
 		this.balanceChange = balanceChange;
 	}
+	
+	private void setTimeStamp(LocalDateTime timeStamp) 
+	{
+		this.timeStamp = timeStamp;
+	}
+	
+	public LocalDateTime getTimeStamp() 
+	{
+		return timeStamp;
+	}
+
 
 	//Print a message of the info of the data activity
 	@Override

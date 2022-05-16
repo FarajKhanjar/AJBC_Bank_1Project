@@ -10,5 +10,10 @@ import java.util.Scanner;
  */
 public class Static_Scan 
 {
-		public static Scanner scanner = new Scanner(System.in);
+	public static Scanner scanner;
+	static 
+	{
+		scanner = new Scanner(System.in);
+	}
+
 }

@@ -1,123 +1,12 @@
 package Runner;
 
-import java.time.LocalDate;
-import java.util.Scanner;
-
-import AccountOwner.Account;
-import AccountOwner.AccountOwner;
-import AccountOwner.AccountProperties;
-import AccountOwner.Credentials;
 import AppManager.AppManager;
-import BankManager.BankManager;
-import Person.PhoneNumber;
 
 public class Runner 
 {			
-	public static int lengthOfData = 100;
-	public static AccountOwner[] usersArray  = new AccountOwner[lengthOfData];
-	private static int index;
-	
 	public static void main(String[] args) 
 	{		
-		Scanner scanner = Static_Scan.scanner;		
-		/**
-		 * Create database of the AJBC manager bank.
-		 */		
-		BankManager AJBC_manager = createTheManagerAccount(); 
-		createUserDataBase(AJBC_manager);
-		AppManager appManager = new AppManager(AJBC_manager);		
-		//System.out.println(AJBC_manager);
-		
-		/**
-		 * Create default data in array.
-		 */		
-		AccountOwner AJBC_userAccount1 = createUserAccount(); 
-		createUserDataBase(AJBC_userAccount1);
-		AppManager appManager1 = new AppManager(AJBC_userAccount1);
-		//System.out.println(AJBC_userAccount1);
-		
-		AccountOwner AJBC_userAccount2 = createUserAccount1(); 
-		createUserDataBase(AJBC_userAccount2);
-		AppManager appManager2 = new AppManager(AJBC_userAccount2);
-		//System.out.println(AJBC_userAccount2);
-
-		appManager.runner(); //Go to the App-Menu.
-				
-	}
-	
-	/**
-	 * In this method we create The Manager Bank Account 
-	 * @return AJBC_manager= The Manager Bank Account
-	 */
-	public static BankManager createTheManagerAccount() 
-	{
-		Credentials credentials = new Credentials("Faraj123", "f123456");
-		PhoneNumber phoneNumber = new PhoneNumber("050", "9909129");
-		LocalDate birthDate = LocalDate.of(1990, 07, 26);
-		double monthlyIncome = 15000;
-		double balance = 250000;
-		BankManager AJBC_manager = new BankManager("Faraj", "Khanjar",phoneNumber, birthDate, credentials);
-		AccountOwner bankOwner = new AccountOwner("Faraj", "Khanjar" ,phoneNumber, birthDate,monthlyIncome, credentials ,AJBC_manager);
-		Account account = new Account(balance,AccountProperties.TITANIUM, 0d, 0d);
-		return AJBC_manager;
-	}
-	
-	/**
-	 * In this method we create a Bank Account 
-	 * @return bankOwner= with random values.
-	 */
-	public static AccountOwner createUserAccount() 
-	{
-		LocalDate birthDate = LocalDate.of(1993, 06, 28);
-		Credentials credentials = new Credentials("Rami123", "m123456");
-		PhoneNumber phoneNumber = new PhoneNumber("054", "2459909");
-        //System.out.println(phoneNumber.getPhoneNumber());	
-		double monthlyIncome = 20000;
-		String firstName = "Rami";
-		String lastName = "mad";		
-		double balance = 25000;
-
-		AccountOwner bankOwner = new AccountOwner(firstName, lastName ,phoneNumber, birthDate,credentials,monthlyIncome);
-		Account account = new Account(balance,AccountProperties.GOLD, 2d, 3d);
-		return bankOwner;
-	}
-	
-	/**
-	 * In this method we create another Bank Account 
-	 * @return bankOwner= with random values.
-	 */
-	public static AccountOwner createUserAccount1() 
-	{
-		LocalDate birthDate = LocalDate.of(1980, 05, 20);
-		Credentials credentials = new Credentials("sami123", "s12345");
-		PhoneNumber phoneNumber = new PhoneNumber("050", "9969125");
-        //System.out.println(phoneNumber.getPhoneNumber());	
-		double monthlyIncome = 7500;
-		String firstName = "Sami";
-		String lastName = "levi";		
-		double balance = 15000;
-
-		AccountOwner bankOwner = new AccountOwner(firstName, lastName ,phoneNumber, birthDate,credentials,monthlyIncome);
-		Account account = new Account(balance,AccountProperties.SILVER, 4d, 4.5d);
-		return bankOwner;
-	}
-	
-	/**
-	 * In this method the AJBC_manager enter to our database array
-	 * @param AJBC_manager in D.B array
-	 */
-	public static void createUserDataBase(BankManager AJBC_manager) 
-	{		
-		usersArray[index] = AJBC_manager;
-	}
-	
-	/**
-	 * In this method the bankOwner enter to our database array
-	 * @param bankOwner in D.B array
-	 */
-	public static void createUserDataBase(AccountOwner bankOwner) 
-	{	
-		index+=1;
-		usersArray[index] = bankOwner;
+		AppManager bankSystem = new AppManager();
+		bankSystem.start();
 	}
 }

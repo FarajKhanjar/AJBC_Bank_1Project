@@ -38,7 +38,7 @@ public class Credentials
 		
 	public void setUserName(String userName) 
 	{
-		boolean checkUserNameLD = cheackLettersAndDigits(userName); 
+		boolean checkUserNameLD = cheackUserNameIfOkay(userName); 
 		if(!checkUserNameLD)
 			System.out.println("Invalid Username");
 			else
@@ -47,7 +47,7 @@ public class Credentials
 		
 	public void setPassword(String password) 
 	{
-		boolean checkPasswordLD = cheackLettersAndDigits(password);
+		boolean checkPasswordLD = cheackPasswordIfOkay(password);
 	    if(checkPasswordLD==false || password.length()>8 || password.length()<4)
 	    {
 	    	    System.out.println("Invalid Password");
@@ -63,12 +63,32 @@ public class Credentials
      * @param userName: check the string input.
      * @return True or False.
      */
-	private boolean cheackLettersAndDigits(String userStr)
+	public static boolean cheackUserNameIfOkay(String userName)
 	{
-		if(userStr.matches("[a-zA-Z0-9]*")) {
-			return true;
+		for (int i=0; i<userName.length(); i++)
+		{
+			char currentChar = userName.charAt(i);
+			if (!Character.isDigit(currentChar) && !Character.isLetter(currentChar)) 
+				return false;
+
 		}
-		else
+		return true;
+	}
+	
+	public static boolean cheackPasswordIfOkay(String password)
+	{
+		if (password.length() > 8 || password.length() < 4)
 			return false;
+		boolean foundLetter = false, foundDigit = false;
+		for (int i=0; i<password.length(); i++)
+		{
+			char currentChar = password.charAt(i);
+			if (Character.isLetter(currentChar))
+				foundLetter = true;
+			else if (Character.isDigit(currentChar))
+				foundDigit = true;
+
+		}
+		return (foundLetter && foundDigit);
 	}
 }

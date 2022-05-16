@@ -8,7 +8,10 @@ package AccountOwner;
  */
 public enum Payee 
 {
-	The_AJBC_BANK, PHONE, WATER, ELECTRIC;
+	The_AJBC_BANK,
+	PHONE_COMPANY,
+	WATER_COMPANY,
+	ELECTRIC_COMPANY;
 
 	public static Payee getPayeeType(int index) 
 	{
@@ -17,11 +20,11 @@ public enum Payee
 		case 1:
 			return The_AJBC_BANK;
 		case 2:
-			return PHONE;
+			return PHONE_COMPANY;
 		case 3:
-			return WATER;
+			return WATER_COMPANY;
 		case 4:
-			return ELECTRIC;
+			return ELECTRIC_COMPANY;
 		default:
 			return The_AJBC_BANK;
 		}
@@ -38,11 +41,11 @@ public enum Payee
 		{
 		case The_AJBC_BANK:
 			return 1;
-		case PHONE:
+		case PHONE_COMPANY:
 			return 2;
-		case WATER:
+		case WATER_COMPANY:
 			return 3;
-		case ELECTRIC:
+		case ELECTRIC_COMPANY:
 			return 4;
 		default:
 			return 1;

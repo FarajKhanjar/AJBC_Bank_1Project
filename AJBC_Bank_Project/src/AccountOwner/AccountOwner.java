@@ -6,10 +6,8 @@ import Person.PhoneNumber;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.Scanner;
 
 import AppManager.AppManager;
-import BankManager.BankManager;
 import Runner.Static_Scan;
 
 /**
@@ -21,25 +19,14 @@ import Runner.Static_Scan;
 public class AccountOwner extends Person
 {
 
-	//fields
+	//Fields
 	private Account account = null;
 	private double monthlyIncome;
 	private Credentials credentials;
-	private BankManager bankManager;
 	private final int MAXIMUM_Payments_Number = 60; //In case the number of payments exceeds sixty...
 	private LocalDateTime lock = null;
 	
-	//constructors
-	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber ,LocalDate bitrthDate
-			, double monthlyIncome, Credentials credentials,BankManager bankManager ) 
-	{
-		super(firstName, lastName, phoneNumber, bitrthDate);
-		setAccount(account);
-		setMonthlyIncome(monthlyIncome);
-		setCredentials(credentials);
-		this.bankManager=bankManager;
-	}
-	
+	//Constructor	
 	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNumber, LocalDate birthDate,
 			Credentials credentials, double monthlyIncome) 
 	{
@@ -48,87 +35,6 @@ public class AccountOwner extends Person
 		setMonthlyIncome(monthlyIncome);
 	}
 	
-	/**
-	 * In this method will run the Menu show in the application.
-	 * @return number input that sign of action in the application.
-	 */
-	public int runActionsMenu() 
-	{		
-		  while(true) 
-		  {
-			actionsMenu();
-		    int temp = Integer.parseInt(Static_Scan.scanner.next());
-		    if(temp == 8)
-		    {
-		    	System.out.println("Good Buy!");
-		        break;
-		    }
-		    bankActionsCheck(temp);
-		  }
-		return 8;		
-	}
-	
-	/**
-	 * Its the second Menu that will show in the application,
-	 * it will shoe the actions that the users asked to do in the application,
-	 * here the user will enter a number input and because of this the system will do the action.
-	 * @return the number of action
-	 */
-	public void actionsMenu() 
-	{
-		  System.out.println("\n\nHi :),\n" 
-	                         +"Here you can show our Menu activities,\n" 
-				             + "Select what you are looking for:\n");
-		  System.out.println("1. Check Bank Balance\n" + "2. Produce Activity Report\n"
-		                      + "3. Make a deposit\n" + "4. Make a Withdrawal\n" + "5. Transfer funds\n" 
-				              + "6. Pay bill\n" + "7. Get Loan\n" + "8.Exit");
-		  
-	}
-	
-	/**
-	* With the help of Switch-case the system will go the action that the user choose as input.
-	* @param inputNumber = a helper to choose the action from the menu.
-	*/
-	public void bankActionsCheck(int temp) 
-	{
-		  switch(temp)
-		  {
-		  case 0: 
-			  System.out.println("Try again");
-			  runActionsMenu();
-		  case 1:
-			  checkBalance();  
-			  break;
-		  case 2: 			  
-			  produceReport();
-			  break;
-		  case 3: 			  
-			  deposit();
-			  break;
-			
-		  case 4: 			  
-			  withdrawal();
-			  break;
-				
-		  case 5: 			  
-			  transferFunds();
-			  break;
-			  
-		  case 6: 			  
-			  payBill();
-			  break;
-			 
-		  case 7: 			  
-			  loanRequest();
-			  break;
-			  
-		  case 8: 			  
-			  logout();
-			  break;
-						  
-		  }
-	}
-
 	/**
 	 * Get an Set method help us to get values of the fields or set a new values.
 	 *
@@ -168,6 +74,32 @@ public class AccountOwner extends Person
 		return super.getPhoneNumber();
 	}
 	
+	/**
+	 * In this two methods, the user input a wrong password a three time,
+	 * Because of that, the system will lock the user for 30 min,
+	 * in this method we will check if the user is locked or not, 
+	 * if the user locked then will check the time used "LocalDateTime".
+	 * @return
+	 */
+	public boolean cheackIfAccountLocks() 
+	{
+		if(this.lock == null)
+			return false;
+		if(this.lock.getMinute()+30 > LocalDateTime.now().getMinute())
+			return true;
+		return false;
+	}
+	
+	public void makeAccountLock() 
+	{
+		this.lock = LocalDateTime.now();
+	}
+	
+	public void sendToManagerApproval()
+	{
+		AppManager.bankManager.setUsersToApprove(this);
+	}
+	
 	
 	/**
 	 * Check account balance.
@@ -175,7 +107,6 @@ public class AccountOwner extends Person
 	public void checkBalance()
 	{
 		System.out.println("The Balance of the account is: " + account.getBalance());
-		runActionsMenu();
 	}
 	
 	
@@ -187,7 +118,7 @@ public class AccountOwner extends Person
 		int authenticationCode = createATMcode();
 		System.out.println("Now we will send you a code, make sure that you see it alone,");
 		System.out.println("Press '1' to see the code");
-		int temp = Integer.parseInt(Static_Scan.scanner.next());
+		Integer.parseInt(Static_Scan.scanner.next());
 		System.out.println("Your code is: " + authenticationCode);
 		System.out.print("Enter your authentication code to deposit cash: ");
 		int enterCode = Static_Scan.scanner.nextInt();
@@ -203,7 +134,6 @@ public class AccountOwner extends Person
 		{
 			System.out.println("Something Wrong, this code is incorrect");
 		}
-		runActionsMenu();
 	}
 
 	/**
@@ -226,7 +156,7 @@ public class AccountOwner extends Person
 	/**
 	 * User makes a withdrawal request through the app and get the funds when authenticated in an ATM.
 	 */
-	private void withdrawal()
+	public void withdrawal()
 	{
 		System.out.print("What is the amount of cash you want to withdrawal? ");
 		int cashAmount = Static_Scan.scanner.nextInt();
@@ -235,23 +165,17 @@ public class AccountOwner extends Person
 		{
 			System.out.printf("Successful withdrawal of: "+cashAmount);
 		}
-		runActionsMenu();
 	}
 		
 	
     /**
      * User makes a fast transfer to another user by providing a phone number and an amount.
      */
-	private void transferFunds()
+	public void transferFunds()
 	{
-		/*System.out.print("For transfer amount of many, Enter receiving user phone number: ");
-		String receiveNumber = Static_Scan.scanner.next();
-		PhoneNumber phoneNumber = PhoneNumber.getFullPhoneNumber(receiveNumber);
-		AccountOwner receiverAccount = AppManager.getOwnerByPhoneNum(phoneNumber);
-		*/
 		System.out.print("For transfer amount of many, Enter receiving username: ");
 		String username = Static_Scan.scanner.next();
-		AccountOwner receiverAccount = AppManager.getOwnerByUserName(username);
+		AccountOwner receiverAccount = AppManager.getUserByUsername(username);
 
 		if (receiverAccount == null) 
 		{
@@ -266,24 +190,20 @@ public class AccountOwner extends Person
 				System.out.printf("Successful transfer of: "+cashAmount);
 			}
 		}
-		runActionsMenu();
 	}
 	
 	
-	/**
-	 * User makes a payment to a payee.
-	 */
+
 	public void payBill() 
 	{
-		System.out.println("Choose which bill you want to pay: ");
+		System.out.println("Which bill do you want to pay: ");
 		for(Payee payeeType : Payee.values()) 
 		{
-			//print the types of bills
-			System.out.println(Payee.getIndexOfPayee(payeeType) +" . " + payeeType);
+			System.out.println(Payee.getIndexOfPayee(payeeType) +") " + payeeType);
 		}
 		
 		int payee = Static_Scan.scanner.nextInt();
-		System.out.print("Who mush the bill is ? ");
+		System.out.print("Enter the bill amount please: ");
 		int cashAmount = Static_Scan.scanner.nextInt();
 		if(account.payBill(cashAmount, Payee.getPayeeType(payee).toString())) 
 		{
@@ -318,13 +238,12 @@ public class AccountOwner extends Person
 		{
 			System.out.println("Sorry... this amount is bigger then maximum loan.");
 		}
-		runActionsMenu();
 	}
 	
 	/**
 	 * The user is displayed with a full report of the account activity within a range of dates.
 	 */
-	private void produceReport()
+	public void produceReport() 
 	{
 		System.out.println("Enter start date:");
 		System.out.print("day: ");
@@ -334,43 +253,35 @@ public class AccountOwner extends Person
 		System.out.print("year: ");
 		int year = Static_Scan.scanner.nextInt();
 
-		LocalDateTime timeStamp=(LocalDateTime.of(year, month, day, 0, 0));
-		ActivityData[] activities = account.getHistoryFromGivenDate(timeStamp);
-
-		System.out.println("The Activities from: "+timeStamp);
 		System.out.println();
-		for (ActivityData nameOfActivity : activities) 
+		System.out.println("Activity Report:");
+		getActivityReportData(LocalDateTime.of(year, month, day, 0, 0));
+	}
+
+	// Regular user report that shows the activities that were made from that date, and also current balance and summary loan if exists.
+	private void getActivityReportData(LocalDateTime timestamp) 
+	{
+		System.out.println(timestamp);
+		ActivityData[] activities = account.getHistoryFromGivenDate(timestamp);
+		
+		for (ActivityData data : activities) 
 		{
-			System.out.println(nameOfActivity);
+			System.out.println(data);
 		}
+
+		System.out.println();
 		checkBalance();
-		runActionsMenu();
+
+		if(account.getLoan() != null) {
+			System.out.println();
+			account.getLoan().printSummary();
+		}
 	}
 	
-	private void logout() 
+	
+	public void logout() 
 	{
 		account=null;
-		System.out.println("Good Buy");
-	}
-	
-	/**
-	 * In this two methods, the user input a wrong password a three time,
-	 * Because of that, the system will lock the user for 30 min,
-	 * in this method we will check if the user is locked or not, 
-	 * if the user locked then will check the time used "LocalDateTime".
-	 * @return
-	 */
-	public boolean cheackIfAccountLocks() 
-	{
-		if(this.lock == null)
-			return false;
-		if(this.lock.getMinute()+30 > LocalDateTime.now().getMinute())
-			return true;
-		return false;
-	}
-	
-	public void makeAccountLock() 
-	{
-		this.lock = LocalDateTime.now();
+		System.out.println("See you soon :)");
 	}
 }

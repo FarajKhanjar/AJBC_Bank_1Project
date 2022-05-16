@@ -3,6 +3,8 @@ package Menus;
 import java.util.Scanner;
 
 import AppManager.AppManager;
+import AppManager.LoginAccount;
+import AppManager.OpenAccount;
 import BankManager.BankManager;
 
 public class WelcomeMenu 
@@ -47,9 +49,9 @@ public class WelcomeMenu
 			
 			case ENTER:
 			{
-				inputUsername = AppManager.getUsernameRegistration();
-				inputPassword = AppManager.getPasswordRegistration();
-				AppManager.currentUser = AppManager.login(inputUsername, inputPassword);
+				inputUsername = OpenAccount.getUsernameRegistration();
+				inputPassword = OpenAccount.getPasswordRegistration();
+				AppManager.currentUser = LoginAccount.login(inputUsername, inputPassword);
 				if (AppManager.currentUser != null)
 				{
 					if (AppManager.currentUser instanceof BankManager) //check if the login account is the bank manager.
@@ -66,7 +68,7 @@ public class WelcomeMenu
 			
 			case NEW:
 			{
-				AppManager.openAccount();
+				OpenAccount.openAccount();
 				break;				
 			}
 			default:

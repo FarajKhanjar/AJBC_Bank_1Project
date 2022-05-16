@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 import AppManager.AppManager;
+import AppManager.LoginAccount;
 import Runner.Static_Scan;
 
 /**
@@ -175,7 +176,7 @@ public class AccountOwner extends Person
 	{
 		System.out.print("For transfer amount of many, Enter receiving username: ");
 		String username = Static_Scan.scanner.next();
-		AccountOwner receiverAccount = AppManager.getUserByUsername(username);
+		AccountOwner receiverAccount = LoginAccount.getUserByUsername(username);
 
 		if (receiverAccount == null) 
 		{
@@ -272,7 +273,8 @@ public class AccountOwner extends Person
 		System.out.println();
 		checkBalance();
 
-		if(account.getLoan() != null) {
+		if(account.getLoan() != null) 
+		{
 			System.out.println();
 			account.getLoan().printSummary();
 		}

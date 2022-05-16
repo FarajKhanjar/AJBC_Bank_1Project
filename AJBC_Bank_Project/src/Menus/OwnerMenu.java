@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import AccountOwner.AccountOwner;
 import AppManager.AppManager;
+import AppManager.OpenAccount;
 import Person.PhoneNumber;
 
 public class OwnerMenu 
@@ -52,8 +53,8 @@ public class OwnerMenu
 				break;
 			case 4:
 				System.out.println("Enter phone number of receiver:");
-				phoneNumber = AppManager.getPhoneFromInput();
-				AccountOwner receiver = AppManager.getOwnerByPhoneNumber(phoneNumber);
+				phoneNumber = OpenAccount.getPhoneFromInput();
+				AccountOwner receiver = OpenAccount.getOwnerByPhoneNumber(phoneNumber);
 				if (receiver == null)
 				{
 					System.out.println("We didnt fount this user in our system, try again!");

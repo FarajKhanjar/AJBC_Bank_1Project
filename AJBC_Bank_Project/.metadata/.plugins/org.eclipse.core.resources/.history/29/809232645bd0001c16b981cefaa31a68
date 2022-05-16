@@ -1,0 +1,25 @@
+package Menus;
+
+import AppManager.BankManager;
+import AppManager.PhoneNumber;
+
+import java.util.Scanner;
+
+public class UserMenu 
+{
+	private static Scanner scanner;
+	
+	public void userMenu()
+	{
+		System.out.println("\nTo open account, enter 1");
+		System.out.println("To login with username and password, enter 2");
+		System.out.println("To exit the system, enter -1");
+		
+		continueInApplecation();
+	}
+	
+	
+	
+	
+
+}

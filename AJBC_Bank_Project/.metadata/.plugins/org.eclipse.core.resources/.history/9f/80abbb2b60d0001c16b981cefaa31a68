@@ -1,0 +1,30 @@
+package Menus;
+
+public class managerMenu 
+{
+	public void printManagerOptions()
+	{
+		System.out.println("To approve and set accounts, enter 1");
+		System.out.println("To owner menu, enter 2");
+		System.out.println("To back main menu, enter 3");
+	}
+	
+	public void managerMenu()
+	{
+
+		int choice;
+		printManagerOptions();
+		choice = sc.nextInt();
+		while (choice != -1)
+		{
+			if (choice == 1)
+				manager.setAndApproveAcc();
+			else
+				accountOwnerMenu();
+			printManagerOptions();
+			choice = sc.nextInt();
+		}
+
+	}
+
+}

@@ -1,0 +1,22 @@
+package Runner;
+
+import java.time.LocalDate;
+import java.util.Scanner;
+
+import AccountOwner.Account;
+import AccountOwner.AccountOwner;
+import AccountOwner.AccountProperties;
+import AccountOwner.Credentials;
+import AppManager.AppManager;
+import BankManager.BankManager;
+import Person.PhoneNumber;
+
+public class Runner 
+{			
+
+	public static void main(String[] args) 
+	{		
+		AppManager bankSystem = new AppManager();
+		bankSystem.run();
+	}
+}

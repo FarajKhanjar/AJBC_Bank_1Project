@@ -1,0 +1,11 @@
+package AppManager;
+
+import AccountOwner.AccountOwner;
+
+public class DataBase 
+{
+	//Fileds
+	public static AccountOwner[] usersArray  = {};
+	public static  AccountOwner currentUser;
+
+}

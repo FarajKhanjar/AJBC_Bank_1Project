@@ -1,0 +1,67 @@
+package Menus;
+
+import AppManager.BankManager;
+import AppManager.PhoneNumber;
+
+import java.util.Scanner;
+
+public class UserMenu 
+{
+	
+	public void userMenu()
+	{
+		System.out.println("\nTo open account, enter 1");
+		System.out.println("To login with username and password, enter 2");
+		System.out.println("To login with phone number, enter 3");
+		System.out.println("To exit the system, enter -1");
+		
+		continueInApplecation();
+	}
+	
+	/**
+	 *  main menu for login, opening account and exit system
+	 */
+	public void continueInApplecation()
+	{
+		int choice = scanner.nextInt();
+		sc.nextLine();
+		String username, password;
+		while (choice != -1)
+		{
+			switch (choice)
+			{
+			case 1:
+				openAccount();
+				break;
+			case 2:
+				username = getUsernameFromInput();
+				password = getPasswordFromInput();
+				currUser = login(username, password);
+				if (currUser != null)
+					if (currUser instanceof BankManager)
+						managerMenu();
+					else
+						accountOwnerMenu();
+				break;
+			case 3:
+				PhoneNumber currPhone = getPhoneFromInput();
+				currUser = login(currPhone);
+				if (currUser != null)
+					if (currUser instanceof BankManager)
+						managerMenu();
+					else
+						accountOwnerMenu();
+				break;
+			default:
+				break;
+			}
+			printUserOptions();
+			choice = sc.nextInt();
+			sc.nextLine();
+		}
+		System.out.println("Goodbye!");
+	}
+	
+	
+
+}

@@ -1,0 +1,65 @@
+package Menus;
+
+import java.util.Scanner;
+
+import AppManager.AppManager;
+import BankManager.BankManager;
+
+public class WelcomeMenu 
+{	
+	public static Scanner scanner = new Scanner(System.in);
+	
+	public static void welcomeMassege() 
+	{
+		System.out.println("You are welcome to our AJBC Bank :)");		
+		bankMenu();
+	}
+	
+	public static void bankMenu() 
+	{
+		System.out.println("===================================");
+		System.out.println("How our servise can help you? :)");
+		System.out.println("=============================");
+		System.out.println("1. Login\n"+ "2. Open Account\n" + "3. Exit");
+		int choice = scanner.nextInt();
+		bankMenuActions(choice);
+	}
+	
+	/**
+	 *  main menu for login, opening account and exit system
+	 */
+	public static void bankMenuActions(int choice)
+	{
+		String username, password;
+		//private  AccountOwner currentUser;
+		//final int ENTER = 1;
+		//final int NEW = 2;
+		final int EXIT = 3;
+		
+		while (choice != EXIT)
+		{
+			switch (choice)
+			{
+			case 1:
+				username = AppManager.getUsernameFromInput();
+				password = AppManager.getPasswordFromInput();
+				AppManager.currentUser = AppManager.login(username, password);
+				if (AppManager.currentUser != null)
+					if (AppManager.currentUser instanceof BankManager)
+						ManagerMenu.managerMenu();
+					else
+						OwnerMenu.ownerMenu(username);
+				break;	
+			case 2:
+				AppManager.openAccount();
+				break;
+			default:
+				break;
+			}
+			bankMenu();
+			choice = scanner.nextInt();
+			scanner.nextLine();
+		}
+		System.out.println("Goodbye!");
+	}	
+}

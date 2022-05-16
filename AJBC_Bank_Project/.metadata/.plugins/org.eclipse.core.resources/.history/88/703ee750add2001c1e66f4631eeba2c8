@@ -1,0 +1,471 @@
+package AppManager;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import java.util.Scanner;
+
+import AccountOwner.Account;
+import AccountOwner.AccountOwner;
+import AccountOwner.AccountProperties;
+import AccountOwner.Credentials;
+import AccountOwner.Payee;
+import BankManager.BankManager;
+import Menus.WelcomeMenu;
+import Person.PhoneNumber;
+
+/**
+ * In this class the banking application start, here will show the actions to do.
+ * @author Faraj
+ */
+public class AppManager 
+{		
+	private static Scanner scanner = new Scanner(System.in);
+	
+	//Fileds
+	public static AccountOwner[] usersArray  = {};
+	public static  AccountOwner currentUser;
+	public static BankManager bankManager;
+	private static int numOfUsers;
+	private static final int MAX_USERS = 1000;
+	
+	//Constructor
+	public AppManager()
+	{
+		usersArray = new AccountOwner[MAX_USERS];
+		numOfUsers = 0; //Default users number is zero.
+		setBankManager();
+		setUsersInArray();
+	}
+	
+	/**
+	 * Create the Default bank manager account.
+	 */
+	private void setBankManager()
+	{
+		Credentials managerUserAndPassward = new Credentials("TheManager", "faraj123");
+		PhoneNumber managerPhoneNumber = new PhoneNumber("054","2459909");
+		LocalDate managerBday = LocalDate.of(1993, 6, 28);
+		bankManager = new BankManager("Faraj", "Khanjar", managerPhoneNumber, managerBday, managerUserAndPassward);
+		usersArray[numOfUsers++] = bankManager;
+	}
+	
+	/**
+	 * set two default account owners
+	 */
+	private void setUsersInArray()
+	{
+		Credentials c1 = new Credentials("Wafi123", "wafi321");
+		LocalDate bday1 = LocalDate.of(1997, 8, 29);
+		PhoneNumber phone1 = new PhoneNumber("050","9969129");
+		AccountOwner owner1 = new AccountOwner("Wafi", "Khanjar", phone1, bday1,c1, 25000);
+		double balance1 = 15000;
+		owner1.setAccount(new Account(balance1,AccountProperties.SILVER, 4d, 4.5d,bankManager));
+		addUser(owner1);
+		
+		Credentials c2 = new Credentials("Nasreen267", "nm12345");
+		LocalDate bday2 = LocalDate.of(1999, 7, 26);
+		PhoneNumber phone2 = new PhoneNumber("050","2914848");
+		AccountOwner owner2 = new AccountOwner("Nasreen", "Madi", phone2, bday2,c2, 15000);
+		double balance2 = 50000;
+		owner2.setAccount(new Account(balance2,AccountProperties.SILVER, 4d, 4.5d,bankManager));
+		addUser(owner2);		
+	}
+	
+	/**
+	 * add a new account owner to users array
+	 * @param owner the account owner to add
+	 */
+	private static void addUser(AccountOwner owner)
+	{
+		usersArray[numOfUsers++] = owner;
+	}
+	
+	
+	
+	/**
+	 * run the application and present main menu
+	 */
+	public void run()
+	{
+		WelcomeMenu.welcomeMessage();		
+	}
+	
+
+	/**
+	 * checks if the account owner has been approved my manager
+	 * @param owner the account owner
+	 * @return false if the account is null, true otherwise
+	 */
+	public static boolean isUserApproved(AccountOwner owner)
+	{
+		if (owner.getAccount() == null)
+		{
+			System.out.println("User hasn't been approved by manager yet.");
+			return false;
+		}
+		return true;
+	}
+	
+	
+	/**
+	 *  login with username and password
+	 *	if password is wrong, gives 3 more tries
+	 *	after 3 more wrong tries, the account is blocked for 30 minutes
+	 *	returns the logging account owner
+	 * @param username the account owner username
+	 * @param password the account owner password
+	 * @return the logged in account owner 
+	 */
+	public static AccountOwner login(String username, String password)
+	{		
+		AccountOwner loggingOwner = getUserByUsername(username);
+		
+		if (loggingOwner == null)
+		{
+			System.out.println("No account owner with the given username.");
+			return null;
+		}
+		if (!isUserApproved(loggingOwner))
+			return null;
+		Credentials ownerCredentials = loggingOwner.getCredentials();
+		LocalDateTime currentRelease = loggingOwner.getAccount().getReleaseTime();
+		if (currentRelease != null)
+		{
+			if (!checkRelease(currentRelease))
+			{
+				System.out.println("Your account has been blocked. please come back at " +currentRelease);
+				return null;
+			}
+			loggingOwner.getAccount().setReleaseTime(null);
+		}
+		
+		if (checkPassword(password, ownerCredentials.getPassword()))
+		{
+			System.out.println("Successfully logged in.");
+			return loggingOwner;
+		}
+		if (giveUser3TriesForPassword(loggingOwner))
+		{
+			System.out.println("Successfully logged in.");
+			return loggingOwner;
+		}
+		blockAccount(loggingOwner);
+		return null;
+	}
+	
+	/**
+	 * check if release time has passed, false otherwise
+	 * @param release the account release time 
+	 * @return true if release time has passed, false otherwise
+	 */
+	public static boolean checkRelease(LocalDateTime release)
+	{
+		if (release.isAfter(LocalDateTime.now()))
+			return false;
+		return true;			
+	}
+	
+	/**
+	 * block account of user
+	 * @param user the account owner to block their account
+	 */
+	public static void blockAccount(AccountOwner user)
+	{
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime releaseTime = now.plusMinutes(30);
+		user.getAccount().setReleaseTime(releaseTime);
+		System.out.println("Your account has been blocked, come back at "+releaseTime);
+	}
+	
+
+	/**
+	 * gives user 3 tries to enter correct password
+	 * @param user the account owner that is trying to log in 
+	 * @return true if user succeeds, false otherwise
+	 */
+	public static boolean giveUser3TriesForPassword(AccountOwner user)
+	{
+		Credentials userCredentials = user.getCredentials();
+		int tries = 3;
+		while (tries > 0)
+		{
+			System.out.printf("Wrong password! you have %d more tries\n", tries);
+			System.out.println("Enter password");
+			String currentTry = scanner.next();
+			if (checkPassword(currentTry, userCredentials.getPassword()))
+				return true;
+			else
+				tries--;
+		}
+		return false;
+	}
+	
+	/**
+	 * check equality of given password to the actual password
+	 * @param givenPassword the password that the users enter
+	 * @param actualPassword the user's actual password
+	 * @return true if passwords are equal, false otherwise
+	 */
+	public static boolean checkPassword(String givenPassword, String actualPassword)
+	{
+		return givenPassword.equals(actualPassword);
+	}
+	
+
+	/**
+	 * login with phone number
+	 * @param phoneNum given phone number
+	 * @return the logging account owner, null if doesnt exist in the system
+	 */
+	public AccountOwner login(PhoneNumber phoneNum)
+	{
+		AccountOwner owner = getOwnerByPhoneNum(phoneNum);
+		if (owner == null)
+		{
+			System.out.println("No user with the given phone number.");
+			return null;
+		}
+		if (!isUserApproved(owner))
+			return null;
+		LocalDateTime currentRelease = owner.getAccount().getReleaseTime();
+		if (currentRelease != null)
+		{
+			if (!checkRelease(currentRelease))
+			{
+				System.out.println("Your account has been blocked. please come back at "
+					+currentRelease);
+				return null;
+			}
+			owner.getAccount().setReleaseTime(null);
+		}
+		System.out.println("Successfully logged in.");
+		return owner;
+	}
+	
+	
+	/**
+	 *  get account owner by phone number
+	 * @param phoneNum the given phone number
+	 * @return the account owner with the given phone number, 
+	 * null if there is no user with this number
+	 */
+	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
+	{
+		for (int i=0; i<numOfUsers; i++)
+		{
+			if (usersArray[i].getPhoneNumber().equals(phoneNum))
+				return usersArray[i];
+		}
+		return null;
+	}
+	
+	/**
+	 * logout of the system
+	 * set current user to null
+	 */
+	public void logout()
+	{
+		System.out.println("Successfully logged out.");
+		currentUser = null;
+	}
+	
+	
+	/** 
+	 * get user by username
+	 * @param username
+	 * @return the account owner with the given username,
+	 * null if no user with the given username
+	 */
+	public static AccountOwner getUserByUsername(String username)
+	{
+		for (int i=0; i<numOfUsers; i++)
+		{
+			if (usersArray[i].getCredentials().getUserName().equals(username))
+				return usersArray[i];
+		}
+		return null;
+	}
+	
+	/**
+	 * get phone number from user by area code and number
+	 * @return the given phone number
+	 */
+	public static PhoneNumber getPhoneFromInput()
+	{
+		System.out.println("Enter phone number area code");
+		String areaCode = scanner.next();
+		System.out.println("Enter phone number");
+		String phoneNum = scanner.next();
+		PhoneNumber newPhone = new PhoneNumber(areaCode, phoneNum);
+		return newPhone;
+	}
+	
+	/**
+	 * get date from user by year, month and day of month
+	 * @return the given date
+	 */
+	public static LocalDate getDateFromInput()
+	{
+		System.out.println("Enter year");
+		int year = scanner.nextInt();
+		System.out.println("Enter month (1-12)");
+		int month = scanner.nextInt();
+		System.out.println("Enter day of month (1-31)");
+		int day = scanner.nextInt();
+		scanner.nextLine();
+		LocalDate date = LocalDate.of(year, month, day);
+		return date;
+	}
+	
+	/** 
+	 * get name from user (first name and last name)
+	 * @param kind the requested name (first/last)
+	 * @return the given name
+	 */
+	public static String getNameFromUser(String kind)
+	{
+		System.out.println("Enter "+kind+" name");
+		String input = scanner.next();
+		return input;
+	}
+	
+	/**
+	 * get username from user (for login and creating account)
+	 * @return the given username
+	 */
+	
+	public static String getUsernameFromInput()
+	{
+		System.out.println("Enter username: letters and digits only");
+		String username = scanner.next();
+		return username;
+	}
+	
+	/**
+	 * get password from user (for login and creating account)
+	 * @return the given password
+	 */
+	public static String getPasswordFromInput()
+	{
+		System.out.println("Please enter password: 4-8 characters, must contain a digit and a letter");
+		String password = scanner.next();
+		return password;
+	}
+	
+	/**
+	 * get monthly income from the user
+	 * @return the monthly income
+	 */
+	public static double getMonthlyIncomeFromInput()
+	{
+		System.out.println("Please enter your monthly income");
+		double income = scanner.nextDouble();
+		return income;
+	}
+	
+	/**
+	 * open a new account
+	 * add new user to users array
+	 * add new user to the manager's users to approve array
+	 */
+	public static void openAccount()
+	{
+		PhoneNumber newPhone = getPhoneFromInput();
+		if (getOwnerByPhoneNum(newPhone) != null)
+		{
+			System.out.println("There is already an account with this phone number. please login or register with a different number");
+			return;
+		}
+		scanner.nextLine();
+
+		String name = getNameFromUser("first");
+		String lastName = getNameFromUser("last");
+		System.out.println("Enter birthday");
+		LocalDate birthDate = getDateFromInput();
+		String username = getUsernameFromInput();
+		if (getUserByUsername(username) != null)
+		{
+			System.out.println("Username already exists in the system. please login");
+			return;
+		}
+		while (!Credentials.cheackUserNameIfOkay(username))
+			username = getUsernameFromInput();
+		String password = getPasswordFromInput();
+		while (!Credentials.cheackPasswordIfOkay(password))
+			password = getPasswordFromInput();
+		Credentials newCred = new Credentials(username, password);
+		double income = getMonthlyIncomeFromInput();
+		AccountOwner newOwner = new AccountOwner(name, lastName, newPhone, birthDate, newCred,income);
+		addUser(newOwner);
+		newOwner.sendToManagerApproval();
+		System.out.println("Application completed. waiting for managar approval and setting.");		
+	}
+	
+	/**
+	 * get number of monthly payments from user
+	 * @return the number of months
+	 */
+	public static int getNumberOfMonthsFromInput()
+	{
+		System.out.println("Enter number of monthly payments");
+		int months = scanner.nextInt();
+		return months;
+	}
+	
+	/**
+	 * get amount of money from the user
+	 * @param purpose a string that describes the purpose of the money 
+	 * @return the given amount of money
+	 */
+	public static double getAmountFromUser(String purpose)
+	{
+		System.out.println("Enter amount to "+purpose);
+		double amount = scanner.nextDouble();
+		return amount;
+	}
+		
+	/**
+	 * get payee for bill payment according to user input
+	 * @return the chosen payee
+	 */
+	public static Payee getPayee()
+	{
+		System.out.println("To pay the bank, enter 1");
+		System.out.println("To pay the phone company, enter 2");
+		System.out.println("To pay the water company, enter 3");
+		System.out.println("To pay the electric company, enter 4");
+		int payeeOpt;
+		payeeOpt = scanner.nextInt();
+		Payee payee;
+		switch (payeeOpt)
+		{
+		case 1:
+			payee = Payee.The_AJBC_BANK;
+			break;
+		case 2:
+			payee = Payee.PHONE;
+			break;
+		case 3:
+			payee = Payee.WATER;
+			break;
+		default:
+			payee = Payee.ELECTRIC; 
+		}
+		return payee;
+	}
+
+	public static int getNumOfUsers() 
+	{
+		return numOfUsers;
+	}
+	
+	/**
+	 * prints to the screen all users in the system
+	 */
+	public static void printAllUsers()
+	{
+		for (int i=0; i< numOfUsers; i++)
+			System.out.println(usersArray[i]);
+	}	
+}

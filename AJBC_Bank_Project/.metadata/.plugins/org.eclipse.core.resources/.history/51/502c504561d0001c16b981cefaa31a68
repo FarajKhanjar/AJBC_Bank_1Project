@@ -1,0 +1,33 @@
+package Menus;
+
+import java.util.Scanner;
+
+public class ManagerMenu 
+{
+	private static Scanner scanner;
+	
+	public void managerMenu()
+	{
+		System.out.println("To approve and set accounts, enter 1");
+		System.out.println("To owner menu, enter 2");
+		System.out.println("To back main menu, enter 3");
+		managerMenuActions();
+	}
+	
+	public void managerMenuActions()
+	{
+		int choice = scanner.nextInt();
+		final int EXIT = 3;
+		while (choice != 3)
+		{
+			if (choice == 1)
+				bankManager.setAndApproveAcc();
+			else
+				OwnerMenu.ownerMenu();
+			managerMenu();
+			choice = scanner.nextInt();
+		}
+
+	}
+
+}

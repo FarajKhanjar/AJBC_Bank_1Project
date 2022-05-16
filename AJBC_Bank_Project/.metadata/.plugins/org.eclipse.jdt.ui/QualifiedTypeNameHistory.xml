@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="AccountOwner.AccountProperties"/>
+    <fullyQualifiedTypeName name="Menus.WelcomeMenu"/>
+    <fullyQualifiedTypeName name="Person.PhoneNumber"/>
+    <fullyQualifiedTypeName name="AccountOwner.AccountOwner"/>
+    <fullyQualifiedTypeName name="AccountOwner.Payee"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="Menus.OwnerMenu"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="Runner.Runner"/>
+    <fullyQualifiedTypeName name="AccountOwner.ActivityData"/>
+    <fullyQualifiedTypeName name="AccountOwner.ActivityName"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="AppManager.AppManager"/>
+    <fullyQualifiedTypeName name="BankManager.BankManager"/>
+</qualifiedTypeNameHistroy>
